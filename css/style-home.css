@@ -1,0 +1,42 @@
+#container-main-content{
+
+	position: relative;
+	height: 650px;
+
+}
+
+
+#approval{
+	height:200px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto;
+}
+
+#approval-wrap{
+	width:450px;
+	height:250px;
+	margin:0 auto 50px auto;
+}
+
+#approval-table-header{
+
+	width:100%;
+	height:20px; 
+	text-align:center;
+	
+}
+
+
+#table-approval-content{
+	width:100%;
+	height:20px; 
+	text-align:center;
+}
+
+#view-approval-wrap{
+	margin:10px 0 20px 0;  
+	width:100%;
+	height:50px; 
+}
+
+

@@ -1,0 +1,21 @@
+h1 
+{ font-size: 175%; 
+  font-weight: bold; 
+  text-align: center; 
+}
+
+p{
+	font-size:12pt;
+	text-align:justify;
+}
+
+a{
+	font-size:125%;
+	font-weight: underline;
+	text-align: center;
+}
+
+#content-handler{
+	padding-left: 12%;
+	padding-right: 12%;
+}

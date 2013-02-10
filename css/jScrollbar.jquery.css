@@ -1,0 +1,38 @@
+.clr {
+	clear:both;
+	height:0
+}
+
+	
+/***************/
+/** EXEMPLE 2 **/
+/***************/
+
+	 .jScrollbar_mask {
+		width:450px;
+		position:relative;
+		top:0;
+	}
+		 
+	.jScrollbar_draggable {
+		float:left;
+		width:13px;
+		height:150px;
+		overflow:hidden;
+		background:none;
+		background-color:#8ea9b0;
+		position:relative
+	}
+	 .jScrollbar_draggable a.draggable {
+		position:relative;
+		background-color:#0a5060;
+		display:block;
+		height:45px;
+		width:13px;
+		margin-left:0;
+		cursor:s-resize
+	}
+	
+/***************/
+/** EXEMPLE 3 **/
+/***************/

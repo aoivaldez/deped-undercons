@@ -1,0 +1,1 @@
+<center><strong><h1>Teacher already registered!</h1></strong></center>

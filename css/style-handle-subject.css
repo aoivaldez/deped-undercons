@@ -1,0 +1,42 @@
+#wrap-org-subjcts{
+
+	height:35px;
+	width:500px;
+	background:#FFCF40;
+	margin:0 auto 0 auto;
+	padding:5px;
+}
+
+#wrap-org-subjcts > label{
+
+	font-weight: bold;
+}
+
+#wrap-check-subjcts{
+	height:35px;
+	width:500px;
+	background:#FFCF40;
+	margin:0 auto 0 auto;
+	padding:5px;
+
+}
+
+#wrap-check-subjcts > label{
+
+	font-weight: bold;
+}
+
+#wrap-org-section{
+
+	height:35px;
+	width:500px;
+	background:#FFCF40;
+	margin:0 auto 0 auto;
+	padding:5px;
+}
+
+#wrap-org-section > label{
+
+	font-weight: bold;
+}
+

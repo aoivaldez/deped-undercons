@@ -1,0 +1,1 @@
+<center><strong><h1>Admin already registered!</h1></strong></center>

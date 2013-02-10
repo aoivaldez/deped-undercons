@@ -1,0 +1,47 @@
+
+		th{
+			font-size:16px;
+			font-weight:bold;  
+		}
+
+/* class section style*/
+
+#class-wrap{
+	width:600px;
+	height:150px;
+	margin:0 auto 100px auto;
+}
+
+
+#class-list-wrap{
+    height:170px;
+    border:1px solid #6C8CD5;
+    margin:0 auto 20px auto; 
+}
+
+#table-section-list-header{
+    width:98%;
+    text-align: center;
+
+}
+
+#class-content{
+	width:600px;
+	border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
+    margin: 0 auto;
+    min-height: 250px;
+    padding: 20px;
+   }
+
+
+   #table-users-content{
+	 text-align:center;
+}
+
+
+
+
+/*end style class section*/
+ 
+

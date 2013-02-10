@@ -1,0 +1,82 @@
+td{
+
+	margin:50px;
+
+}
+
+
+#acct-set-container{
+
+	width:600px;
+	min-height:200px; 
+	margin:0 auto 0 auto;
+	border: 1px solid #C8C8C8;
+}
+
+#account-settings-container li{
+	color:#000000;
+	font-weight:bold;
+	  
+}
+
+.change-wrap{
+	display:none;
+}
+
+.edit-wrap-link{
+	border-bottom:1px solid #C8C8C8; 
+	line-height:31px; 
+	height:40px;  
+}
+
+
+.edit-wrap-link:hover {
+	background:#E9E9E9;
+	cursor:pointer;
+
+}
+
+.edit-wrap-link  a{
+
+	color:black;
+	padding:5px;
+	
+}
+
+#account-settings-container li >a{
+	display:block;
+	color:#000000;
+	font-weight:bold;
+	height:20px; 
+}
+
+
+#change-username-content{
+	background:none; 
+	min-height:200px;
+}
+
+#change-username-table-wrap{
+	padding:5px; 
+	width:400px;
+	margin:15px auto 0 auto;
+}
+
+
+#change-username-table-wrap td:first-child{
+	text-align:right; 
+}
+
+
+#change-username-table-wrap label{
+	font-weight:normal; 
+	color:#666666;
+	text-align:right; 
+}
+
+.change-button-wrap{
+
+	height:50px;
+	width:200px;
+	margin:10px auto 0 auto;	
+}

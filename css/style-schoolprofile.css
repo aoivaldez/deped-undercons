@@ -1,0 +1,41 @@
+#content-schoolprofile{
+	width:700px;
+	min-height:400px;
+	position:relative;  
+	margin:0 auto 0 auto;
+	border: 1px solid #C8C8C8;
+
+}	
+
+.result{
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#picture-holder{
+	width:250px;
+	height: 250px;
+	float:right;
+	margin-top: 20px;
+	margin-right: 85px;
+	border: 1px solid #C8C8C8;
+}
+
+#status_notregistered{
+	font-weight: bold;
+	font-size: 14px;
+	color: red;
+}
+
+#status_registered{
+	font-weight: bold;
+	font-size: 14px;
+	color: #008000;
+}
+
+#logo-profile{
+	height:250px;
+	width:250px;
+
+
+}

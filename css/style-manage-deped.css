@@ -1,0 +1,105 @@
+/* manage tab css */
+
+
+/* end*/
+
+
+
+/* modal style */
+
+
+  #mask {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}
+  
+
+ .window {
+  position:absolute;
+  left:0;
+  top:0;
+  width:440px;
+  display:none;
+  z-index:9999;
+  padding:20px;
+}
+
+.boxes .window {
+  min-height:250px;
+  padding:10px;
+  background-color:#ffffff;
+  border: 1px solid #61B4CF;
+  
+}
+
+#announcement-window{
+
+	  width:400px; 				
+}
+
+
+.curr-wrap{
+    margin:0 auto 50px auto;
+    width:500px;  
+    border: 1px solid #61B4CF;
+    min-height:250px;
+    padding:20px;
+}
+
+
+
+#tbl_searchschool tr:nth-child(odd){
+    background:#D3D3D3;
+}
+
+#tbl_searchadmin tr:nth-child(odd){
+    background:#D3D3D3;
+}
+
+
+#tbl_schooldetails th{
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: bolder;
+}
+
+#tbl_admindetails th{
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: bolder;
+}
+
+table#tbl_searchschool{
+    width:100%; 
+    border-collapse: collapse;
+
+}
+
+table#tbl_searchschool td{
+    font-size:12px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+
+}
+
+table#tbl_searchadmin{
+    width:100%; 
+    border-collapse: collapse;
+
+}
+
+table#tbl_searchadmin td{
+    font-size:12px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+
+}
+
+/* end modal*/
+

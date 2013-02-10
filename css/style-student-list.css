@@ -1,0 +1,59 @@
+#student-list-wrap{
+	position:relative;
+	width:950px;
+	min-height:600px;
+	margin:0 auto 0 auto;
+	
+}
+
+#students-wrap-boy{
+	width:400px;
+	float:left;
+	min-height:400px;
+	border:1px solid #62AFD0;
+	margin:20px 0  0  50px;
+}
+
+
+#students-wrap-girl{
+	width:400px;
+	float:right;
+	min-height:400px;
+	border:1px solid #62AFD0;
+	margin:20px 50px  0  0;
+}
+
+#student-listG-header{
+	text-align:center;
+	
+
+}
+
+#student-listB-header{
+	text-align:center;
+	
+	
+}
+
+#table-Bstudents-list{
+	margin:5px auto 0 auto;
+
+}
+
+#table-Gstudents-list{
+	margin:5px auto 0 auto;
+
+}
+
+#content-student-list-header-wrap{
+	height:30px;
+	background:#FFDF73;
+	padding:20px 5px 5px 5px;
+
+}
+
+#content-student-list-footer-wrap{
+	height:30px;
+	background:#FFDF73;
+	padding:20px 5px 5px 5px;
+}

@@ -1,0 +1,180 @@
+
+		th{
+			font-size:16px;
+			font-weight:bold;  
+		}
+
+/* class section style*/
+
+#class-wrap{
+	width:450px;
+	height:150px;
+	margin:0 auto 150px auto;
+}
+
+#subjects-wrap{
+	width:450px;
+	height:150px;
+	margin:0 auto 150px auto;
+}
+
+
+#teaher-handle-wrap{
+	width:510px;
+	height:150px;
+	margin:0 auto 200px auto;
+}
+
+
+#assigned-faculty-subject-wrap{
+	width:510px;
+	height:150px;
+	margin:0 auto 150px auto;
+}
+
+
+#sections-wrap{
+	width:450px;
+	height:150px;
+	margin:0 auto 150px auto;
+}
+
+
+#my-advisory-wrap{
+	width:450px;
+	height:150px;
+	margin:0 auto 150px auto;
+}
+
+
+#sections-list-wrap{
+	height:150px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto; 
+}
+
+#subjects-list-wrap{
+	height:170px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto; 
+}
+
+#section-list-wrap{
+	height:170px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto; 
+}
+
+
+#table-subject-content{
+	width:100%;
+	text-align:center;
+	border-collapse:collapse; 
+}
+
+#teacher-handler-table{
+	width:100%;
+	text-align:center;
+	border-collapse:collapse; 
+}
+
+#assigned-faculty-table{
+	width:100%;
+	text-align:center;
+	border-collapse:collapse; 
+}
+
+#table-subject-header{
+	width:98%;
+	text-align:center; 
+
+}
+
+#table-teacher-handler-header{
+	width:98%;
+	text-align:center; 
+
+}
+
+#table-assigned-handler-header{
+	width:98%;
+	text-align:center; 
+
+}
+
+#table-sections-header{
+	width:98%;
+	text-align:center;
+}
+
+#table-advisory-header{
+	width:98%;
+	text-align:center;
+}
+
+#table-advisory-content{
+	width:100%;
+	text-align:center;
+}
+
+#class-content{
+	width:600px;
+	border: 1px solid #C8C8C8;
+    margin: 0 auto;
+    min-height: 250px;
+    padding: 20px;
+   }
+
+table#table-class-content{
+	width:100%;
+	text-align:center; 
+	border-collapse: collapse;
+}
+
+ 
+#subjcthandle-wrap{
+	width:450px;
+	height:130px;
+	margin:0 auto 150px auto;
+}
+#subjecthandle-list-wrap{
+	height:150px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto; 
+}
+
+#teacher-handler-list-wrap{
+	height:170px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 0 auto;
+}
+
+#assigned-faculty-list-wrap{
+	height:170px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto;
+}
+
+#advisory-list-wrap{
+	height:170px;
+	border:1px solid #6C8CD5;
+	margin:0 auto 20px auto; 
+}
+
+
+
+#my-subjects-table{
+	width:100%;
+	text-align:center;
+	border-collapse:collapse; 
+
+}
+
+#subject-available-content{
+	width:100%;
+	text-align:center;
+	border-collapse:collapse;
+
+}
+
+

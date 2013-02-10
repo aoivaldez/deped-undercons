@@ -1,0 +1,44 @@
+header{
+
+	height:150px;
+}
+
+
+#main{
+margin:0 auto 0 auto;
+width:900px;
+height:auto;
+
+}
+
+
+#login-wrap{
+margin:0 auto 0 auto;	
+	height:50px;
+	width:310px;
+	
+}
+
+#labl-login-wrap{
+	height:50px;
+	width:95px;
+	float:left;
+	text-align:right;
+	margin-right:5px;
+}
+
+#labl-login-wrap > label{
+	
+	margin-bottom:10px;
+}
+
+#inpt-login-wrap{
+
+	width:200px;
+	float:right;
+}
+
+#button-login-wrap{
+	height:50px;
+	width:300px;
+}

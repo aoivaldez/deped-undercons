@@ -1,0 +1,77 @@
+#profheader{
+	max-width:700px;
+
+}
+
+#edit-schoolprofile{
+	width:700px;
+	height:450px;
+	position:relative;  
+	margin:0 auto 0 auto;
+	border: 1px solid #C8C8C8;
+}
+
+#editprofile{
+	width:340px;
+	height:350px;
+	margin-left: 6%;
+}
+
+#div_btns{
+	height:0px;
+	text-align: center;
+}
+
+#btn_save{
+	margin-right: 8%;
+	margin-top:4%;
+}
+
+
+#picture-holder{
+	width:200px;
+	height: 340px;
+	float:right;
+	text-align: center;
+	margin-top: 20px;
+	margin-right: 85px;
+}
+
+.inputbox{
+	margin:0 auto 0 auto;
+}
+
+table{
+	width:20%;
+}
+
+#picture-box{
+	width:200px;
+	height:200px;
+	border: 1px solid #C8C8C8;
+}
+
+#button-div{
+	margin-top: 10%;
+}
+
+input[type="text"] {
+    width: 230px;
+}
+
+.result{
+	font-weight: bold;
+	font-size: 14px;
+	margin-top: 2%;
+}
+
+td{
+	padding:15px;
+	height:70;
+}
+
+br {
+  line-height:150%;
+}
+
+

@@ -1,0 +1,162 @@
+body{
+
+
+}
+
+#wrap{
+	min-height:300px;
+	width:810px;
+	margin:0 auto 0 auto;
+	padding:20px 0 0 50px;
+	border: 1px solid #C8C8C8;
+}
+
+
+#wrap-left{
+
+	height:270px;
+	width:350px;
+	float:left;
+	
+}
+
+
+
+#wrap-right{
+	float:right;
+	height:270px;
+	width:410px;
+	
+
+}
+
+
+
+#login-wrap{
+	padding:20px 0 0 50px;
+	margin:30px 50px;	
+	height:150px;
+	width:310px;
+	background:#4284D3;
+	color:white;
+	float:right;
+	border: 1px solid #C8C8C8;
+		
+}
+
+
+
+#notice-wrap{
+	margin:0 auto 5px auto;	
+	padding:5px 5px 5px 5px;
+	height:25px;
+	width:250px;
+	background-color:#FF3333;
+	border: 1px solid #C8C8C8;
+	
+}
+
+
+
+#user-login-wrap{
+	display:block;
+	width:250px;
+	height:30px;
+	margin:5px;
+
+}
+#pass-login-wrap{
+	display:block;	
+	width:250px;
+	height:20px;
+	margin:5px;
+}
+
+#waiting{
+
+	width:70px;
+	height:48px;
+	margin:100px auto 0 auto;
+}
+
+
+.label-log{
+
+	float:left;
+	text-align:right;
+
+}
+
+.log-input{
+
+	float:right;
+}
+
+#button-login-wrap{
+	display:block;	
+	height:40px;
+	width:300px;
+	margin:30px auto 0 auto; 
+}
+
+#left-log-wrap{
+
+	float:left;
+	width:90px;
+	height:50px;
+}
+#right-log-wrap{
+	float:right;
+	line-height:20px; 
+	margin:0 15px 0 0;
+	width:90px;
+	height:50px;
+
+}
+
+#first-content{
+
+	position:relative;
+	width:800px;
+	height:300px; 
+}
+
+#registration-wrap{
+
+	width:700px;
+	height:300px;
+	margin:0 auto 10px auto;
+	border: 1px solid #C8C8C8;
+	display:none; 
+}
+ 
+#wrap-reg-info{
+	position: relative;
+	height:250px;
+}
+
+#left-reg-content{
+	width:250px;
+	margin:5px;
+	float:left;
+
+}
+
+#right-reg-content{	 
+	width:400px;
+	margin:5px; 
+	float:right;
+}
+#reg-button-wrap{
+	width:200px;
+	margin:0 auto 0 auto;  
+}
+
+#left-reg-content table{
+	margin:10px 0 0 0;  
+}
+
+#right-reg-content table{
+	margin:10px 0 0 0;	 
+	
+}
