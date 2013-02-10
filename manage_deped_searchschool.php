@@ -15,7 +15,7 @@
 		$data[] = array(
 			'search_school' => $row['school_name'],
 			'search_school_id' => $row['school_id'],
-			'search_address' => $row['school_address']
+			'search_address' => $row['school_address'],
 		);
 	}
 

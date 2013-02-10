@@ -233,7 +233,7 @@ $(document).ready(function (){
       /*end sent-updates*/
 
       /*approval*/
-        var elem_height = $('#approval').height();  
+        var elem_height = $('#approval-wrap').height();  
 
         var height = $(this).height();
 
@@ -343,6 +343,18 @@ $(document).ready(function (){
         var height = $(this).height();
 
         $('#school-sections-content').slimScroll({
+          height:elem_height,
+          start: 'top',
+          wheelStep: 10,
+          railVisible: true,
+        }).css({ paddingRight: '10px' });
+
+
+           var elem_height = $('#search-school-wrap').height();  
+
+        var height = $(this).height();
+
+        $('#search-school-content').slimScroll({
           height:elem_height,
           start: 'top',
           wheelStep: 10,
