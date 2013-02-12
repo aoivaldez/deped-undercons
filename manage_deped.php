@@ -691,6 +691,9 @@
 
 
 
+
+
+
           $('#search-content').slimScroll({
             height:elem_height,
             start: 'top',
@@ -818,7 +821,118 @@
 
             schools_4_evaluation();
 
+             $('#reset-btn').click(function (){
 
+              if($('input[name=school_checkbx]').is(':checked')){
+
+
+                var schools = [] ;
+
+                 $.each($('input[name=school_checkbx]:checked'), function(i, item) {
+
+                            var  school_id = $(item).val();  
+                                 
+                                   schools.push({"school_id":school_id});
+                               });
+
+                 if( ajax_request){
+
+
+                    ajax_request.abort();
+                 }
+
+                   ajax_request  = $.ajax({
+
+                                type:'POST',
+                                url:'deped_functions.php',
+                                dataType:'json',
+                                data:{'func_num':'7','schools_id':schools},
+                                 success:function (data){
+
+                                        if(data.pki_unset == "1"){
+
+                                          alert("Successfuly Changed");
+
+                                          $('#school-search-btn').trigger('click');
+
+                                        }
+                                        else{
+
+                                          alert("Ooopss There was an error");
+
+                                        }
+
+
+                                    }
+
+                                 });
+                
+              }
+              else{
+
+                alert("Please Choose A School");
+
+              }
+
+
+          });
+
+
+          $('#allow-btn').click(function (){
+
+              if($('input[name=school_checkbx]').is(':checked')){
+
+
+                var schools = [] ;
+
+                 $.each($('input[name=school_checkbx]:checked'), function(i, item) {
+
+                            var  school_id = $(item).val();  
+                                 
+                                   schools.push({"school_id":school_id});
+                               });
+
+                 if( ajax_request){
+
+
+                    ajax_request.abort();
+                 }
+
+                   ajax_request  = $.ajax({
+
+                                type:'POST',
+                                url:'deped_functions.php',
+                                dataType:'json',
+                                data:{'func_num':'8','schools_id':schools},
+                                 success:function (data){
+
+                                        if(data.pki_set == "1"){
+
+                                          alert("Successfuly Changed");
+
+                                          $('#school-search-btn').trigger('click');
+
+                                        }
+                                        else{
+
+                                          alert("Ooopss There was an error");
+
+                                        }
+
+
+                                    }
+
+                                 });
+                
+              }
+              else{
+
+                alert("Please Choose A School");
+
+              }
+
+
+          });
             
 
              $('#view-school-button').click(function (){

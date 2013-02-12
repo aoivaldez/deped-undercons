@@ -24,7 +24,10 @@
 			break;
 		case 7:
 			unset_school_pki();
-			break;				
+			break;
+		case 8:
+			set_school_pki();
+			break;					
 											
 	}
 
@@ -302,7 +305,63 @@
 
 	function unset_school_pki(){
 		
+		$school_info = $_POST['schools_id'];
+
+
+			$schools_id_update= array();
+
+		foreach ($school_info as $key=>$data) {
+								    $school_id= $data['school_id'];
+								   
+
+				$schools_id_update[$key] = "UPDATE schools SET public_key = '' WHERE school_id = '$school_id' ";
+
+
+				$query_update_pki= mysql_query($schools_id_update[$key]) or die (mysql_error());
+
+				}
+
+				if($query_update_pki){
+
+					$return['pki_unset'] = "1";
+				}else{
+
+					$return['pki_unset'] = "0";
+				}
+
+
+		echo json_encode($return);
 		
+	}
+
+	function set_school_pki(){
+		
+		$school_info = $_POST['schools_id'];
+
+
+			$schools_id_update= array();
+
+		foreach ($school_info as $key=>$data) {
+								    $school_id= $data['school_id'];
+								   
+
+				$schools_id_update[$key] = "UPDATE schools SET public_key = 'ALVIN' WHERE school_id = '$school_id' ";
+
+
+				$query_update_pki= mysql_query($schools_id_update[$key]) or die (mysql_error());
+
+				}
+
+				if($query_update_pki){
+
+					$return['pki_set'] = "1";
+				}else{
+
+					$return['pki_set'] = "0";
+				}
+
+
+		echo json_encode($return);
 		
 	}
 
