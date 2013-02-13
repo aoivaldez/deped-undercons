@@ -623,7 +623,7 @@
                               element+="<td  style='width:15%;' align='center'><input type='checkbox' name='section_checkbx' value='"+data[i].section_id+"'></td>";
                              element+="<td  style='width:25%;'>"+data[i].section_name+"</td>";
                              element+="<td  style='width:20%;'>"+data[i].status+"</td>";
-                              element+="<td  style='width:15%;'>"+data[i].section_level+"</td></tr>";
+                              element+="<td  style='width:15%;'>"+data[i].section_level+"</td>";
                                element+="<td style='width:25%;'>"+data[i].lastname+", "+data[i].firstname+" "+ data[i].middlename+"</td></tr>";
 
                              $('#table_searchsection_content').append(element);
@@ -633,6 +633,8 @@
                 });
 
           });
+
+         $('#section-search-btn').trigger("click");
 
         $('#class_department_addsection').live('change',function(){
           
