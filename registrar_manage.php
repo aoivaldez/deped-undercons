@@ -60,7 +60,8 @@
         <ul class="tabs">
             <li><a href="#tab1">Users</a></li>
             <li><a href="#tab2">Class sections</a></li>
-            <li><a href="#tab3">Announcements</a></li>        
+            <li><a href="#tab3">Announcements</a></li>
+             <li><a href="#tab4">Evaluation</a></li>        
         </ul>           
       </div>  
 
@@ -195,6 +196,61 @@
           </div>
 
       </div>
+
+      <div id="tab4" class="tab-content">
+
+               
+
+               <div class="wrap-search-nav">
+                         <label>Seach Section Name:</label>
+                            
+                        <input type="text" id="section-name-search" name="srch_sch_name" class="input" >
+
+                         <input type="button"  id="section-search-btn"  class="button " value="Search">
+                </div>        
+              <div id="search-section-wrap">
+                  <div class="header-name-wrap">
+                    <h3>Search</h3>
+                  </div>
+
+                  
+
+                  <div id="search-section-hits">
+                    <div id="search-section-content">
+
+                     <table id="tbl_sectiondetails" class="table-header-all">
+                      <tr>
+                          <th style="width:15%;" align="center">Selected</th>
+                          <th style="width:25%;" align="center"> Section Name</th>
+                          <th style="width:20%;" align="center"> Status</th>
+                          <th style="width:15%;" align="center"> Level</th>
+                          <th style="width:25%;" align="center">Advisor</th>
+                      </tr>
+                    </table>
+
+
+                    <table id="table_searchsection_content" class="table-content-all">
+                      
+                    </table>
+
+                    
+                     
+                    </div>  
+                    
+                  </div>
+
+                  <input type="button"  id="check-all-btn"  class="button " value="Check All">
+                  <input type="button"  id="uncheck-all-btn"  class="button " value="Uncheck">
+                  <input  type="button"  id="reset-btn" class="button" value="Reset">
+
+                  <input type="button"  id="allow-btn"  class="button " value="Allow">
+
+                 
+
+                  
+               </div> 
+
+            </div>
          
     </div>
 
@@ -395,6 +451,8 @@
 
         var ajax;
 
+        var  ajax_request;
+
         $('#search-content').slimScroll({
           height:elem_height,
           start: 'top',
@@ -402,8 +460,179 @@
           railVisible: true,
         }).css({ paddingRight: '10px' });
 
+        $('#check-all-btn').live('click',function (){
+
+            $('input[name=section_checkbx]').attr('checked',true);
+
+          });
+
+
+          $('#uncheck-all-btn').live('click',function (){
+
+            $('input[name=section_checkbx]').attr('checked',false);
+
+          });
+          
+          $('#reset-btn').click(function (){
+
+              if($('input[name=section_checkbx]').is(':checked')){
+
+
+                var sections = [] ;
+
+                 $.each($('input[name=section_checkbx]:checked'), function(i, item) {
+
+                            var  section_id = $(item).val();  
+                                 
+                                   sections.push({"section_id":section_id});
+                               });
+
+                 if( ajax_request){
+
+
+                    ajax_request.abort();
+                 }
+
+                   ajax_request  = $.ajax({
+
+                                type:'POST',
+                                url:'sections_function.php',
+                                dataType:'json',
+                                data:{'func_num':'2','sections_id':sections},
+                                 success:function (data){
+
+                                        if(data.pki_set == "1"){
+
+                                          alert("Successfuly Changed");
+
+                                          $('#section-search-btn').trigger('click');
+
+                                        }
+                                        else{
+
+                                          alert("Ooopss There was an error");
+
+                                        }
+
+
+                                    }
+
+                                 });
+                
+              }
+              else{
+
+                alert("Please Choose A Section");
+
+              }
+
+
+
+          });
+
+
+          $('#allow-btn').click(function (){
+
+              if($('input[name=section_checkbx]').is(':checked')){
+
+
+                var sections = [] ;
+
+                 $.each($('input[name=section_checkbx]:checked'), function(i, item) {
+
+                            var  section_id = $(item).val();  
+                                 
+                                   sections.push({"section_id":section_id});
+                               });
+
+                 if( ajax_request){
+
+
+                    ajax_request.abort();
+                 }
+
+                   ajax_request  = $.ajax({
+
+                                type:'POST',
+                                url:'sections_function.php',
+                                dataType:'json',
+                                data:{'func_num':'3','sections_id':sections},
+                                 success:function (data){
+
+                                        if(data.pki_set == "1"){
+
+                                          alert("Successfuly Changed");
+
+                                          $('#section-search-btn').trigger('click');
+
+                                        }
+                                        else{
+
+                                          alert("Ooopss There was an error");
+
+                                        }
+
+
+                                    }
+
+                                 });
+                
+              }
+              else{
+
+                alert("Please Choose A Section");
+
+              }
+
+
+          });
+
 
         /**************add section department selection*******************/
+
+        $('#section-search-btn').click(function (){
+
+            var search_word = $('#section-name-search').val();
+
+            $('#table_searchsection_content').html("");
+
+               if(ajax_request){
+
+            ajax_request.abort();
+          }
+
+            ajax_request = $.ajax({
+                          type: "post",
+                          url: "sections_function.php",
+                          dataType:'json',
+                          data:{'func_num':'1','section':search_word},
+
+                          
+                          beforeSend: function(data){
+
+                            $('#tbl_searchschool').html('');
+              
+                          },
+
+                          success: function(data){
+                            
+                             $.each(data, function(i, item) {
+
+                           var element= "<tr>";
+
+                              element+="<td  style='width:15%;' align='center'><input type='checkbox' name='section_checkbx' value='"+data[i].section_id+"'></td>";
+                             element+="<td  style='width:25%;'>"+data[i].section_name+"</td>";
+                             element+="<td  style='width:20%;'>"+data[i].status+"</td>";
+                              element+="<td  style='width:15%;'>"+data[i].section_level+"</td></tr>";
+                               element+="<td style='width:25%;'>"+data[i].lastname+", "+data[i].firstname+" "+ data[i].middlename+"</td></tr>";
+
+                             $('#table_searchsection_content').append(element);
+
+                            });
+                          }
+                });
+
+          });
 
         $('#class_department_addsection').live('change',function(){
           
