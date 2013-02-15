@@ -356,14 +356,60 @@
                 </div>
                   <div id="view-form-wrap">
                       <input type="button" id="view-school-button" class="button" value="View School">
-                     
+                      <input type="button" id="authen-school-button" class="button" value="Authenticate">
 
 
                      
                   </div>
               </div>
 
-               
+               <div class="wrap-search-nav">
+                         <label>Seach School Name:</label>
+                            
+                        <input type="text" id="school-name-search" name="srch_sch_name" class="input" >
+
+                         <input type="button"  id="school-search-btn"  class="button " value="Search">
+                </div>        
+              <div id="search-school-wrap">
+                  <div class="header-name-wrap">
+                    <h3>Search</h3>
+                  </div>
+
+                  
+
+                  <div id="search-school-hits">
+                    <div id="search-school-content">
+
+                     <table id="tbl_schooldetails" class="table-header-all">
+                      <tr>
+                          <th style="width:15%;" align="center">Selected</th>
+                          <th style="width:25%;" align="center"> School Name</th>
+                          <th style="width:25%;" align="center"> Status</th>
+                          <th style="width:35%;" align="center">Address</th>
+                      </tr>
+                    </table>
+
+
+                    <table id="table_searchschool_content" class="table-content-all">
+                      
+                    </table>
+
+                    
+                     
+                    </div>  
+                    
+                  </div>
+
+                  <input type="button"  id="check-all-btn"  class="button " value="Check All">
+                  <input type="button"  id="uncheck-all-btn"  class="button " value="Uncheck">
+                  <input  type="button"  id="reset-btn" class="button" value="Reset">
+
+                  <input type="button"  id="allow-btn"  class="button " value="Allow">
+
+                 
+
+                  
+               </div> 
 
             </div>
            
@@ -630,10 +676,18 @@
 
           var ajax_request;
 
-          
+          $('#check-all-btn').live('click',function (){
+
+            $('input[name=school_checkbx]').attr('checked',true);
+
+          });
 
 
+          $('#uncheck-all-btn').live('click',function (){
 
+            $('input[name=school_checkbx]').attr('checked',false);
+
+          });
 
 
 
@@ -661,7 +715,49 @@
 
           });
 
-          
+          $('#school-search-btn').click(function (){
+
+            var search_word = $('#school-name-search').val();
+
+            $('#table_searchschool_content').html("");
+
+               if(ajax_request){
+
+            ajax_request.abort();
+          }
+
+            ajax_request = $.ajax({
+                          type: "post",
+                          url: "deped_functions.php",
+                          dataType:'json',
+                          cache:false,
+                          data:{'func_num':'6','school':search_word},
+
+                          
+                          beforeSend: function(data){
+
+                            $('#tbl_searchschool').html('');
+              
+                          },
+
+                          success: function(data){
+                            
+                             $.each(data, function(i, item) {
+
+                           var element= "<tr>";
+
+                              element+="<td class='test' style='width:15%;' align='center'><input type='checkbox' name='school_checkbx' value='"+data[i].search_school_id+"'></td>";
+                             element+="<td align='center' style='width:25%;'>"+data[i].search_school+"</td>";
+                             element+="<td align='center' style='width:25%;'>"+data[i].status+"</td>";
+                              element+="<td align='center' style='width:35%;'>"+data[i].search_address+"</td></tr>";
+
+                             $('#table_searchschool_content').append(element);
+
+                            });
+                          }
+                });
+
+          });
 
           $('#filter_users').trigger("change");
 
@@ -722,7 +818,7 @@
 
             schools_4_evaluation();
 
-             
+
             
 
              $('#view-school-button').click(function (){

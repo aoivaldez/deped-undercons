@@ -1,42 +1,5 @@
 <!doctype html>
 
-
-<?php
-
-  // $indicator_session = session_start();
-
-
-
-  //   if($indicator_session)
-  //   {
-  //       if($_SESSION['accnt_typ_fac']){
-  //         header('location:home.php');
-
-  //       }
-  //       else if( $_SESSION['accnt_typ']) {
-
-  //          header('location:home_registrar.php');
-
-  //       }
-  //       else{
-
-
-  //          header('location:home_deped.php');
-  //       }
-
-
-
-  //   }
-
-  //   else{
-
-
-
-
-
-?>
-
-
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
@@ -236,7 +199,3 @@
  </script>
 </body>
 </html>
-<?php
-
-//}
-?>

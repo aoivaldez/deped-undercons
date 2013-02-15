@@ -19,7 +19,12 @@
 			break;
 		case 5:
 			change_evaluation_status();
-
+		case 6:
+			school_search_check_pki();
+			break;
+		case 7:
+			unset_school_pki();
+			break;				
 											
 	}
 
@@ -124,7 +129,6 @@
 										   'sec_dept'=>$row['section_department'],
 										   'sec_lvl'=>$row['section_level'],
 										   'advisory_id'=>$row['advisory_id'],
-										   'advisor_id'=>$row['advisor_id'],
 										   'accptd_dates'=>$row['accepted_dates'],
 										   'status'=>$row['status_acceptance'], 
 										);
@@ -258,5 +262,48 @@
 			
 	}
 
+	function school_search_check_pki(){
+
+
+
+
+			$school = $_POST['school'];
+
+			$search_string = "(school_name LIKE '%".$school."%')";
+			
+			$query = "SELECT * FROM `schools` WHERE {$search_string}";
+
+			$result = mysql_query($query)or die(mysql_error());
 	
+			$count=0;
+			while ($row = mysql_fetch_array($result)){
+
+				$data[$count] = array(
+					'search_school' => $row['school_name'],
+					'search_school_id' => $row['school_id'],
+					'search_address' => $row['school_address'],
+					'status'	=> $row['public_key'],
+					);
+
+					if($row['public_key'] != ""){
+
+
+						$data[$count]['status'] = "Allowed";
+					}
+					else{
+						$data[$count]['status'] = "Not Allowed";
+					}
+
+					$count++;
+				}
+
+	echo json_encode($data);
+	}
+
+	function unset_school_pki(){
+		
+		
+		
+	}
+
 ?>

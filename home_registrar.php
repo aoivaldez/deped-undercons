@@ -29,13 +29,9 @@
 
 
 
-  if(!isset($log_session) || !isset($sch_id_reg)){
+  if(!isset($log_session) || empty($log_session)){
 
     header('location:index.php');
-
-    
-
-    
     }
 
 
