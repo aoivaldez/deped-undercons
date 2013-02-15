@@ -330,32 +330,64 @@
                                 year_grade_level  = $('#year_grade_lvl').val();
                                 sbjct_handler_id = $('#assign-handler-id').val();
                                 section_id = $('#section-id').val();
-                            ajax_request  = $.ajax({
 
-                                          type:'POST',
-                                            url:'grades.php',
-                                            dataType:'json',
-                                            data:{'swtch_numbr':'1','section_id':section_id,'subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
-                                            success:function (data){
 
-                                              if(data.error){
+                    ajax_request  =  $.ajax({
 
-                                                alert("Grades didnt save");
-                                                
-                                              }
-                                              else{
+                                    type:'POST',
+                                    url:'grades.php',
+                                    dataType:'json',
+                                    data:{'swtch_numbr':'10','sec_id':section_id},
+                                    success:function (data){
 
-                                                alert("Grades are saved");
-                                                $('#save_grade_button').hide();
-                                                $('#edit_grade_button').show();
-                                                    pdf();
+                                        if(data.public_key != "" ){
 
-                                               
+                                           ajax_request  = $.ajax({
 
-                                              }
-                                              
-                                            }
+                                                type:'POST',
+                                                  url:'grades.php',
+                                                  dataType:'json',
+                                                  data:{'swtch_numbr':'1','section_id':section_id,'subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
+                                                  success:function (data){
+
+                                                    if(data.error){
+
+                                                      alert("Grades didnt save");
+                                                      
+                                                    }
+                                                    else{
+
+                                                      alert("Grades are saved");
+                                                      $('#save_grade_button').hide();
+                                                      $('#edit_grade_button').show();
+                                                          pdf();
+
+                                                     
+
+                                                    }
+                                                    
+                                                  }
+                                          });
+
+
+
+                                         }
+                                        else{
+
+
+                                          alert("ooops you are not allowed to save grades in this section please contact your registrar");
+                                        }
+
+                                             
+                                       
+
+                                      
+                                      
+                                    }
                                 });
+
+
+                           
 
 
                       }
@@ -516,22 +548,55 @@
                           sbjct_handler_id = $('#assign-handler-id').val();
 
 
+
+                          section_id = $('#section-id').val();
+
                            $.ajax({
 
                               type:'POST',
                               url:'grades.php',
                               dataType:'json',
-                              data:{'swtch_numbr':'3','subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
+                              data:{'swtch_numbr':'10','sec_id':section_id},
                               success:function (data){
 
-                                
-                                       pdf();
+                                  if(data.public_key != "" ){
+
+                                    $.ajax({
+
+                                        type:'POST',
+                                        url:'grades.php',
+                                        dataType:'json',
+                                        data:{'swtch_numbr':'3','subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
+                                        success:function (data){
+
+                                          
+                                                 pdf();
+                                           
+
+                                          
+                                          
+                                        }
+                                    });
+
+                                  }
+                                  else{
+
+
+                                    alert("ooops you are not allowed to edit grades in this section please contact your registrar");
+                                  }
+
+                                       
                                  
 
                                 
                                 
                               }
                           });
+
+
+
+
+                           
 
             });
 
