@@ -350,11 +350,11 @@ $(document).ready(function (){
         }).css({ paddingRight: '10px' });
 
 
-           var elem_height = $('#search-school-wrap').height();  
+           var elem_height = $('#search-section-wrap').height();  
 
         var height = $(this).height();
 
-        $('#search-school-content').slimScroll({
+        $('#search-section-content').slimScroll({
           height:elem_height,
           start: 'top',
           wheelStep: 10,

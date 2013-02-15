@@ -289,14 +289,16 @@
              });           
 
        
+            var ajax_request;
+
 
             $('#save_grade_button').click(function (){
 
-              var ajax_request;
+              
 
               if(ajax_request){
 
-                       alert("ajax_request.abort()");
+                       ajax_request.abort();
                       }
 
                       else{

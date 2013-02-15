@@ -10,8 +10,10 @@
 
 
   if(!isset($log_session) || empty($log_session)){
-      
-      header('location:index.php');
+
+
+    header('location:index.php');
+     
     
     }
 
