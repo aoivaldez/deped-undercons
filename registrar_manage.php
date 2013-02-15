@@ -241,7 +241,7 @@
 
                   <input type="button"  id="check-all-btn"  class="button " value="Check All">
                   <input type="button"  id="uncheck-all-btn"  class="button " value="Uncheck">
-                  <input  type="button"  id="reset-btn" class="button" value="Reset">
+                  <input  type="button"  id="reset-btn" class="button" value="Block">
 
                   <input type="button"  id="allow-btn"  class="button " value="Allow">
 

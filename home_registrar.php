@@ -29,9 +29,13 @@
 
 
 
-  if(!isset($log_session) || empty($log_session)){
+  if(!isset($log_session) || !isset($sch_id_reg)){
 
-    die("dsafaff");
+    header('location:index.php');
+
+    
+
+    
     }
 
 

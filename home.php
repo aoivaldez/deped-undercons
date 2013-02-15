@@ -28,7 +28,7 @@
 
   if(!isset($log_session) || empty($log_session)){
 
-    die("dsafaff");
+   header('location:index.php');
     }
 
 

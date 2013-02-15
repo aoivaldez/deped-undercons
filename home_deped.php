@@ -10,7 +10,10 @@
 
 
   if(!isset($log_session) || empty($log_session)){
-      die();
+
+
+    header('location:index.php');
+     
     
     }
 

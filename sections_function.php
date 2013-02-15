@@ -62,7 +62,7 @@
 						$data[$count]['status'] = "Allowed";
 					}
 					else{
-						$data[$count]['status'] = "Not Allowed";
+						$data[$count]['status'] = "Blocked";
 					}
 
 					$count++;

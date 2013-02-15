@@ -124,6 +124,7 @@
 										   'sec_dept'=>$row['section_department'],
 										   'sec_lvl'=>$row['section_level'],
 										   'advisory_id'=>$row['advisory_id'],
+										   'advisor_id'=>$row['advisor_id'],
 										   'accptd_dates'=>$row['accepted_dates'],
 										   'status'=>$row['status_acceptance'], 
 										);
