@@ -35,9 +35,11 @@
 			get_sent_status_updates_deped();
 			break;
 		case 10:
-			get_public_key();
+			check_exist_public_key();
 			break;									
-
+		case 11:
+			get_public_key();
+			break;	
 																
 	}
 	function save_grades(){
@@ -767,7 +769,7 @@
 
 	}
 
-	function get_public_key(){
+	function check_exist_public_key(){
 		session_start();
 			$school_id = $_SESSION['school_id'];
 
@@ -789,6 +791,37 @@
 			$return['public_key'] = $public_key;
 			
 			echo json_encode($return);								
+	}
+
+	function get_public_key()
+	{
+
+		session_start();
+			$school_id = $_SESSION['school_id'];
+
+			$section_id = $_POST['section_id'];
+
+			$select_pk = "	SELECT * FROM section 
+							WHERE school_id = '$school_id' 
+							AND section_id = '$section_id'  ";
+
+			$query = mysql_query($select_pk) or die (mysql_error());
+			
+			while ( $row = mysql_fetch_assoc($query)) {
+
+						$public_key = $row['public_key'];
+								
+							}
+
+
+			$return['public_key'] = $public_key;
+			
+			echo json_encode($return);
+
+
+
+
+
 	}	 
 			
 ?>

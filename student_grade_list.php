@@ -205,6 +205,7 @@
         var year_grade_level;
         var sbjct_handler_id;
         var section_id;
+        var ajax_request;
        
 
             $('.student_info').click(function(){
@@ -238,6 +239,64 @@
                         }
 
                     });
+
+
+             function check_public_key()
+
+             {
+
+             section_id = $('#section-id').val();
+
+                  $.ajax({
+
+                      type:'POST',
+                      url:'grades.php',
+                       dataType:'json',
+                       data:{'swtch_numbr':'11','section_id':section_id},
+                       success:function (data){
+
+                              if(data.public_key)
+                              {
+
+                                var public_key = data.public_key;
+
+                                var length_public_key = public_key.length;
+
+                                if(length_public_key == 5){
+                                    
+                                   var core = "";
+                                                                       
+
+                                   $.each(public_key ,function(i,item) {
+
+                                       core += public_key.charAt(i)+"0";
+
+                                          
+
+
+
+                                   });
+
+                                   alert(core);
+
+                                }
+                                else{
+
+                                  alert("no");
+                                }
+                              }
+                              
+                             
+
+
+                         }
+                                                  
+                                                
+                     });
+
+             }
+
+             check_public_key();
 
 
               function pdf(){  
@@ -289,7 +348,7 @@
              });           
 
        
-            var ajax_request;
+            
 
 
             $('#save_grade_button').click(function (){
@@ -375,7 +434,7 @@
                                         else{
 
 
-                                          alert("ooops you are not allowed to save grades in this section please contact your registrar");
+                                          alert("ooops your account not allowed to save grades please contact your registrar");
                                         }
 
                                              
@@ -582,7 +641,7 @@
                                   else{
 
 
-                                    alert("ooops you are not allowed to edit grades in this section please contact your registrar");
+                                    alert("ooops your account allowed to edit grades please contact your registrar");
                                   }
 
                                        
