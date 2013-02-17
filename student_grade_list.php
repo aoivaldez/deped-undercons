@@ -443,7 +443,7 @@
                                         else{
 
 
-                                          alert("ooops your account is not allowed to save grades please contact your registrar");
+                                          alert("Ooops! your account is not allowed to save grades. Please contact your registrar");
                                         }
 
                                              
@@ -641,9 +641,7 @@
                                                  pdf();
 
                                                  check_public_key.call(this);
-                                           
-
-                                          
+ 
                                           
                                         }
                                     });
@@ -652,21 +650,13 @@
                                   else{
 
 
-                                    alert("ooops your is account allowed to edit grades please contact your registrar");
+                                    alert("Ooops! your account is not allowed to edit grades. Please contact your registrar");
                                   }
 
-                                       
-                                 
-
-                                
+ 
                                 
                               }
                           });
-
-
-
-
-                           
 
             });
 

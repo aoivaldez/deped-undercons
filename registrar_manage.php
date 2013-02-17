@@ -155,7 +155,7 @@
                       </div>
 
                     <div id="view-form-wrap">
-                     
+                       <input type="button" id="view-section-button" class="button" value="View Section">
 
                        <input type="button" name="add_section" rel="#createsection-window" class="button modal" value="Add Section">
 
@@ -460,6 +460,27 @@
           railVisible: true,
         }).css({ paddingRight: '10px' });
 
+
+         $('#view-section-button').click(function (){
+
+
+          if($('input[name=section_id]').is(':checked')){
+
+            var rad_val = $('input[name=section_id]:checked').val();
+            var rad_rel_val = $('input[name=section_id]:checked').attr("rel");
+             var advisor_id_val = $("input[name=section_id]:checked").closest('tr').find('[id=faculty_id]').attr('rel');
+
+
+            $(location).attr("href","student_list_registrar.php?advisory_id="+rad_rel_val+"&sec_id="+rad_val+"&advisor_id="+advisor_id_val);
+            
+          }
+          else{
+
+            alert("Please Select A Section");
+          }
+
+        });
+
         $('#check-all-btn').live('click',function (){
 
             $('input[name=section_checkbx]').attr('checked',true);
@@ -711,7 +732,7 @@
             html = "<tr>";
 
                                   html += "<td style='width:10%;'><input type='radio' name='section_id' rel='"+data[i].advisory_id+"' value='"+data[i].sec_id+"'></td>";
-                                  html += "<td style='width:15%;'><label>"+data[i].sec_lvl+"</label></td>";
+                                  html += "<td style='width:15%;'><label id='faculty_id' rel='"+data[i].faculty_id+"'>"+data[i].sec_lvl+"</label></td>";
                                   html += "<td style='width:25%;'><label>"+data[i].sec_name+"</label></td>";
                                   html += "<td style='width:30%;'><label>"+availability+"</label></td>";                                 
                                   html += "<td style='width:20%;'>"+data[i].sec_dept+"</td>";

@@ -140,7 +140,8 @@ echo json_encode($data);
 			global $school_id;
 
 			$get_section = "SELECT *
-							FROM section a							
+							FROM section a
+							LEFT JOIN advisory_sections b ON(a.section_id = b.section_id)							
 							
 							WHERE a.school_id = '$school_id'  ORDER BY section_level ASC";
 
@@ -158,6 +159,8 @@ echo json_encode($data);
 										   'sec_dept'=>$row['section_department'],
 										   'sec_lvl'=>$row['section_level'],
 										  	'sec_status'=>$row['availability_status'],
+										  	'faculty_id'=>$row['faculty_id'],
+										  	'advisory_id'=>$row['advisory_id'],
 										);
 									}
 			 
