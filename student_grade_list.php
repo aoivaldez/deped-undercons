@@ -258,45 +258,52 @@
                               if(data.public_key)
                               {
 
-                                var public_key = data.public_key;
-
-                                var length_public_key = public_key.length;
-
-                                if(length_public_key == 5){
-                                    
-                                   var core = "";
-                                                                       
-
-                                   $.each(public_key ,function(i,item) {
-
-                                       core += public_key.charAt(i)+"0";
-
-                                          
+                                  var public_key = data.public_key;
 
 
 
-                                   });
+                                  var length_public_key = public_key.length;
 
-                                   alert(core);
+                                  if(length_public_key == 5 ){
+                                      
+                                     var core = "";
 
-                                }
-                                else{
+                                     var to_check = new Array("0","8","1","5","9");
+                                                                         
 
-                                  alert("no");
-                                }
+                                     $.each(public_key ,function(i,item) {
+
+                                         core += public_key.charAt(i)+to_check[i]; 
+
+                                     });
+
+                  ajax_request  =  $.ajax({
+
+                                          type:'POST',
+                                          url:'grades.php',
+                                          dataType:'json',
+                                          data:{'swtch_numbr':'12','sec_id':section_id,'public_key_transfrm':core},
+                                          success:function (data){
+
+                                             alert("Editing Is compelete");
+                                          }
+
+                                  });
+
+
+                                     
+
+                                  }
+                                  else{
+
+                                    alert("Editing Is compelete");
+                                  }
                               }
-                              
-                             
-
-
-                         }
-                                                  
-                                                
+                         }                        
                      });
-
              }
 
-             check_public_key();
+             
 
 
               function pdf(){  
@@ -421,6 +428,8 @@
                                                       $('#edit_grade_button').show();
                                                           pdf();
 
+                                                          check_public_key.call(this);
+
                                                      
 
                                                     }
@@ -434,7 +443,7 @@
                                         else{
 
 
-                                          alert("ooops your account not allowed to save grades please contact your registrar");
+                                          alert("ooops your account is not allowed to save grades please contact your registrar");
                                         }
 
                                              
@@ -630,6 +639,8 @@
 
                                           
                                                  pdf();
+
+                                                 check_public_key.call(this);
                                            
 
                                           
@@ -641,7 +652,7 @@
                                   else{
 
 
-                                    alert("ooops your account allowed to edit grades please contact your registrar");
+                                    alert("ooops your is account allowed to edit grades please contact your registrar");
                                   }
 
                                        

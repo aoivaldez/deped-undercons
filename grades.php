@@ -39,7 +39,10 @@
 			break;									
 		case 11:
 			get_public_key();
-			break;	
+			break;
+		case 12:
+			change_public_key_teacher();
+			break;		
 																
 	}
 	function save_grades(){
@@ -818,6 +821,26 @@
 			
 			echo json_encode($return);
 
+
+
+
+
+	}
+
+	function change_public_key_teacher() {
+		session_start();
+			$school_id = $_SESSION['school_id'];
+
+		 $new_public_key = $_POST['public_key_transfrm'];
+
+			$section_id = $_POST['sec_id'];
+
+		$update_public_key_teacher  = "UPDATE section 
+									   SET public_key = '$new_public_key'
+									   WHERE school_id ='$school_id'
+									   AND section_id = '$section_id'  ";
+
+		$query = mysql_query($update_public_key_teacher )	or die (mysql_error());						   	
 
 
 
