@@ -94,6 +94,12 @@
                      <select id="subjects-list">
                               
                      </select>
+
+                     <div id="authenticity-notice-wrap"> 
+
+                        <h1 id="authenticity-notice"></h1>
+
+                     </div>
           </div>
 
         <div id="student-list-wrap">
@@ -198,14 +204,14 @@
   <script src="js/jscript-global.js"></script>
   <script type="text/javascript" src="js/slimScroll.min.js"></script>
   <script type="text/javascript" src="js/jquery-ui.js"></script>    
-  <script>
+ <script>
      $(document).ready(function (){
 
         var subjct_id;
         var year_grade_level;
         var sbjct_handler_id;
         var section_id;
-        var ajax_request;
+         var ajax_request;
        
 
             $('.student_info').click(function(){
@@ -239,71 +245,6 @@
                         }
 
                     });
-
-
-             function check_public_key()
-
-             {
-
-             section_id = $('#section-id').val();
-
-                  $.ajax({
-
-                      type:'POST',
-                      url:'grades.php',
-                       dataType:'json',
-                       data:{'swtch_numbr':'11','section_id':section_id},
-                       success:function (data){
-
-                              if(data.public_key)
-                              {
-
-                                  var public_key = data.public_key;
-
-
-
-                                  var length_public_key = public_key.length;
-
-                                  if(length_public_key == 5 ){
-                                      
-                                     var core = "";
-
-                                     var to_check = new Array("0","8","1","5","9");
-                                                                         
-
-                                     $.each(public_key ,function(i,item) {
-
-                                         core += public_key.charAt(i)+to_check[i]; 
-
-                                     });
-
-                  ajax_request  =  $.ajax({
-
-                                          type:'POST',
-                                          url:'grades.php',
-                                          dataType:'json',
-                                          data:{'swtch_numbr':'12','sec_id':section_id,'public_key_transfrm':core},
-                                          success:function (data){
-
-                                             alert("Editing Is compelete");
-                                          }
-
-                                  });
-
-
-                                     
-
-                                  }
-                                  else{
-
-                                    alert("Editing Is compelete");
-                                  }
-                              }
-                         }                        
-                     });
-             }
-
-             
 
 
               function pdf(){  
@@ -352,23 +293,102 @@
 
                     $(location).attr("href","tcpdf/New Form18E2.php?sec_id="+<?php echo $section_id; ?>+"&adviser_id="+<?php echo $faculty_id; ?>+"&level="+year_grade+"");
                   }
-             });           
+             });
 
-       
+
+             function allow_sending_editing(){
+
+                 section_id = $('#section-id').val();
+
+                  $.ajax({
+
+                      type:'POST',
+                      url:'grades.php',
+                       dataType:'json',
+                       data:{'swtch_numbr':'11','section_id':section_id},
+                       success:function (data){
+
+                              if(data.public_key == ''){
+                                 $('#save_grade_button').unbind("click").addClass("inactiveButton");
+                                 $('#edit_grade_button').unbind("click").addClass("inactiveButton");
+
+                                 var notice_html = "Your account is blocked for sending and editing grades, Please contact your Registrar";
+
+                                 $('#authenticity-notice').html(notice_html).addClass('sending-editing-notice');
+
+
+                                }
+                              }
+
+                            });
+
+             }
+
+             allow_sending_editing();           
             
+            function check_public_key(){
 
+             section_id = $('#section-id').val();
+
+                  $.ajax({
+
+                      type:'POST',
+                      url:'grades.php',
+                       dataType:'json',
+                       data:{'swtch_numbr':'11','section_id':section_id},
+                       success:function (data){
+
+                              if(data.public_key)
+                              {
+
+                                  var public_key = data.public_key;
+
+
+
+                                  var length_public_key = public_key.length;
+
+                                  if(length_public_key == 5 ){
+                                      
+                                     var core = "";
+
+                                     var to_check = new Array("0","8","1","5","9");
+                                                                         
+
+                                     $.each(public_key ,function(i,item) {
+
+                                         core += public_key.charAt(i)+to_check[i]; 
+
+                                     });
+
+                  ajax_request  =  $.ajax({
+
+                                          type:'POST',
+                                          url:'grades.php',
+                                          dataType:'json',
+                                          data:{'swtch_numbr':'12','sec_id':section_id,'public_key_transfrm':core},
+                                          success:function (data){
+
+                                            
+                                          }
+
+                                  });
+
+
+                                     
+
+                                  }
+                                  
+                              }
+                         }                        
+                     });
+             }
+       
 
             $('#save_grade_button').click(function (){
 
-              
+             
 
-              if(ajax_request){
-
-                       ajax_request.abort();
-                      }
-
-                      else{
-
+             
                               var B_grade = [];
                               var G_grade = [];
 
@@ -396,69 +416,35 @@
                                 year_grade_level  = $('#year_grade_lvl').val();
                                 sbjct_handler_id = $('#assign-handler-id').val();
                                 section_id = $('#section-id').val();
+                              $.ajax({
 
+                                          type:'POST',
+                                            url:'grades.php',
+                                            dataType:'json',
+                                            data:{'swtch_numbr':'1','section_id':section_id,'subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
+                                            success:function (data){
 
-                    ajax_request  =  $.ajax({
+                                              if(data.error){
 
-                                    type:'POST',
-                                    url:'grades.php',
-                                    dataType:'json',
-                                    data:{'swtch_numbr':'10','sec_id':section_id},
-                                    success:function (data){
+                                                alert("Grades didnt save");
+                                                
+                                              }
+                                              else{
 
-                                        if(data.public_key != "" ){
-
-                                           ajax_request  = $.ajax({
-
-                                                type:'POST',
-                                                  url:'grades.php',
-                                                  dataType:'json',
-                                                  data:{'swtch_numbr':'1','section_id':section_id,'subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
-                                                  success:function (data){
-
-                                                    if(data.error){
-
-                                                      alert("Grades didnt save");
-                                                      
-                                                    }
-                                                    else{
-
-                                                      alert("Grades are saved");
-                                                      $('#save_grade_button').hide();
-                                                      $('#edit_grade_button').show();
-                                                          pdf();
-
-                                                          check_public_key.call(this);
-
-                                                     
-
-                                                    }
+                                                alert("Grades are saved");
+                                                $('#save_grade_button').hide();
+                                                $('#edit_grade_button').show();
+                                                    pdf();
+                                                    check_public_key.call(this);
                                                     
-                                                  }
-                                          });
 
-
-
-                                         }
-                                        else{
-
-
-                                          alert("Ooops! your account is not allowed to save grades. Please contact your registrar");
-                                        }
-
-                                             
-                                       
-
-                                      
-                                      
-                                    }
+                                              }
+                                              
+                                            }
                                 });
 
 
-                           
-
-
-                      }
+                      
 
 
                   
@@ -616,44 +602,19 @@
                           sbjct_handler_id = $('#assign-handler-id').val();
 
 
-
-                          section_id = $('#section-id').val();
-
                            $.ajax({
 
                               type:'POST',
                               url:'grades.php',
                               dataType:'json',
-                              data:{'swtch_numbr':'10','sec_id':section_id},
+                              data:{'swtch_numbr':'3','subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
                               success:function (data){
 
-                                  if(data.public_key != "" ){
+                                
+                                       pdf();
+                                   check_public_key.call(this);
 
-                                    $.ajax({
-
-                                        type:'POST',
-                                        url:'grades.php',
-                                        dataType:'json',
-                                        data:{'swtch_numbr':'3','subject_id':subjct_id,'year_level':year_grade_level,'subject_handler_id':sbjct_handler_id,'student_grades_boy':B_grade,'student_grades_girl':G_grade},
-                                        success:function (data){
-
-                                          
-                                                 pdf();
-
-                                                 check_public_key.call(this);
- 
-                                          
-                                        }
-                                    });
-
-                                  }
-                                  else{
-
-
-                                    alert("Ooops! your account is not allowed to edit grades. Please contact your registrar");
-                                  }
-
- 
+                                
                                 
                               }
                           });

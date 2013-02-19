@@ -820,7 +820,7 @@ margin:20px auto 200px auto;
 #authenticity-notice-wrap{
 
 	float:right;
-	width:300px;
+	
 }
 
 .authentic{
@@ -836,4 +836,11 @@ margin:20px auto 200px auto;
 .to-authentic{
 
 	color:black;
+}
+
+.sending-editing-notice{
+
+	color:#A2000C;
+
+
 }
