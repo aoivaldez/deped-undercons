@@ -360,7 +360,7 @@
 
                                      });
 
-                  ajax_request  =  $.ajax({
+                                   $.ajax({
 
                                           type:'POST',
                                           url:'grades.php',
