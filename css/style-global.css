@@ -816,3 +816,24 @@ margin:20px auto 200px auto;
 	height: 260px;
 	margin: 0 auto 100px auto;
 }
+
+#authenticity-notice-wrap{
+
+	float:right;
+	width:300px;
+}
+
+.authentic{
+
+	color:#008500;
+}
+
+.not-authentic{
+
+	color:#A2000C;
+}
+
+.to-authentic{
+
+	color:black;
+}

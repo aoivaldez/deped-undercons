@@ -94,6 +94,13 @@
                      <select id="subjects-list">
                               
                      </select>
+
+
+                     <div id="authenticity-notice-wrap"> 
+
+                        <h1 id="authenticity-notice"></h1>
+
+                     </div>
           </div>
 
         <div id="student-list-wrap">
@@ -186,7 +193,11 @@
 
                  <input type="button" id="view_pdf" class="button" value="View PDF">
 
-                  <input type="button" id="send-deped" class="button" value="Send To Deped">
+                 <input type="button" id="send-deped" class="button" value="Send To Deped">
+
+                 <input type="button" id="auth-grds" class="button" value="Authenticate Grades">
+
+
                 
         </div>
     </div>
@@ -213,9 +224,89 @@
 
             var advisory_year_level = $('#year_grade_students').val();
 
-            
+            function check_authen_grades()
+            {
 
-             
+               section_id = $('#section-id').val();
+
+               $.ajax({
+                        type:'POST',
+                        url:'grades.php',
+                   dataType:'json',
+                       data:{'swtch_numbr':'14','sec_id':section_id},
+                    success:function (data){
+
+                          if(data.authen == '1')
+                          {
+
+                             $('#auth-grds').unbind('click');
+                             
+                            $('#auth-grds').addClass("inactiveButton");
+
+                            $('#authenticity-notice').html("This Grades are Authentic").addClass('authentic');
+
+                          }
+
+                          else if(data.authen == '2'){
+
+                            $('#auth-grds').bind('click');
+                             
+                            $('#auth-grds').removeClass("inactiveButton");
+
+                            $('#authenticity-notice').html("This Grades are Not Authentic").addClass('not-authentic');
+
+                          }
+
+                          else{
+
+                            $('#auth-grds').bind('click');
+                             
+                            $('#auth-grds').removeClass("inactiveButton");
+
+                             $('#authenticity-notice').html("This Grades are For Authenticaion ").addClass('to-authentic');
+
+                          }
+
+                      
+                        }
+
+                    });
+
+
+            } 
+
+
+             check_authen_grades();
+
+
+             $('#auth-grds').click(function (){
+
+
+                  section_id = $('#section-id').val();
+
+                   $.ajax({
+                              type:'POST',
+                              url:'grades.php',
+                         dataType:'json',
+                             data:{'swtch_numbr':'13','sec_id':section_id},
+                          success:function (data){
+
+                                if(data.status)
+                                {
+
+                                  alert("The Grades are authenticated");
+
+                                  check_authen_grades();
+
+                                }
+
+                            
+                              }
+
+                          });
+
+
+             });
 
 
 

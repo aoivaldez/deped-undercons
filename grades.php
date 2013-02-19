@@ -42,7 +42,13 @@
 			break;
 		case 12:
 			change_public_key_teacher();
-			break;		
+			break;
+		case 13:
+			authenticate_grades_sent();
+			break;	
+		case 14:
+			check_authentic_grades();
+			break;	
 																
 	}
 	function save_grades(){
@@ -845,6 +851,128 @@
 
 
 
+	}
+
+	function authenticate_grades_sent(){
+		session_start();
+			$school_id = $_SESSION['school_id'];
+
+			$section_id = $_POST['sec_id'];
+
+
+			$select_pk = "	SELECT * FROM section 
+							WHERE school_id = '$school_id' 
+							AND section_id = '$section_id'  ";
+
+			$query = mysql_query($select_pk) or die (mysql_error());
+			
+			while ( $row = mysql_fetch_assoc($query)) {
+
+						$public_key = $row['public_key'];
+								
+							}
+
+						if ($public_key) {
+
+							
+									    $leng_public_key = strlen($public_key);
+									    $priv_key_extract = "";
+									    $array_pki = array();
+
+
+
+									    for ($i=0; $i <=$leng_public_key-1 ; $i++) {
+									        array_push($array_pki,$public_key[$i]);
+									    }
+									    foreach ($array_pki as $key  => $value) {
+									        //Changed condition below $key % 2 ==0 => replaced with $key % 2 == 1
+									        if($key % 2 == 1) {
+									            // Changed concatenation operator , += replaced with .=
+									            $priv_key_extract .= $public_key[$key];
+									        } 
+									    }
+									
+
+								if($priv_key_extract == "08159")
+								{
+
+									$update_authen_flag  = "UPDATE registrar_grade_archive
+									   SET authenticity_flag = '1'
+									   WHERE school_id ='$school_id'
+									   AND section_id = '$section_id'  ";
+
+								}
+								else
+								{
+
+									$update_authen_flag  = "UPDATE registrar_grade_archive
+									   SET authenticity_flag = '2'
+									   WHERE school_id ='$school_id'
+									   AND section_id = '$section_id' ";
+								}
+
+								$query = mysql_query($update_authen_flag) or die (mysql_error());
+
+								
+							}	
+
+
+								if($query){
+
+										$return['status'] = '1';
+									}
+
+									else{
+										$return['status'] = '0';
+
+									}
+
+							
+
+
+
+							
+		echo json_encode($return);					
+
+	}
+
+	function check_authentic_grades() {
+		session_start();
+			$school_id = $_SESSION['school_id'];
+			$section_id = $_POST['sec_id'];
+
+		$select_pki_state   = "	SELECT * FROM registrar_grade_archive 
+							WHERE school_id = '$school_id' 
+							AND section_id = '$section_id'
+							GROUP BY authenticity_flag  ";
+
+		$query = mysql_query($select_pki_state)	or die (mysql_error());						   	
+
+		while ( $row = mysql_fetch_assoc($query)) {
+
+						$public_key = $row['authenticity_flag'];
+								
+							}
+
+			if($public_key != '1' && $public_key != '2')
+			{
+
+				$return['authen'] = '0';
+
+			}
+			else if($public_key == '1')
+			{
+				$return['authen'] = '1';
+
+			}
+			else{
+
+				$return['authen'] = '2';
+			}
+
+
+
+			echo json_encode($return);
 	}	 
 			
 ?>

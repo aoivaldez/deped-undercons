@@ -1,59 +1,55 @@
 <?php
 require_once('DBconnect.php');
 
-$select_all_schools = "SELECT * FROM schools ";
+			$school_id = '1';
 
-		$query = mysql_query($select_all_schools) OR die(mysql_error());
-
-		$return_data = array();
+			$section_id = '39';
 
 
-		while($row = mysql_fetch_array($query)){
+			$select_pk = "	SELECT * FROM section 
+							WHERE school_id = '$school_id' 
+							AND section_id = '$section_id'  ";
 
-							$item=array(	
-								'school_name' => $row['school_name'],
-								'school_address' => $row['school_address'],
-								'school_id' => $row['school_id'],
+			$query = mysql_query($select_pk) or die (mysql_error());
+
+
+
+			
+			while ($row = mysql_fetch_array($query)) {
+
+						$public_key = $row['public_key'];
 								
-								);
+							}
 
-
-							 $select_sections = "SELECT * FROM section 
-							 					WHERE school_id = '".$row['school_id']."'";
-
-
-							 $query_section = mysql_query($select_sections)	or die(mysql_error());
 							
 
-							 $sections_counts = mysql_num_rows($query_section);
+						if ($public_key) {
 
-
-							 $select_sections_deped_archive = "SELECT * FROM deped_grade_archive 
-							 									WHERE school_id = '".$row['school_id']."'
-							 									GROUP BY section_id ";
-
-
-							 $query_section_deped_archive = mysql_query($select_sections_deped_archive)	or die(mysql_error());
-
-							 $sections_counts_grade_archive = mysql_num_rows($query_section_deped_archive);
-
-							 echo  $sections_counts_grade_archive."=".$sections_counts; 
-
-							 if($sections_counts_grade_archive == $sections_counts ){
-
-							$item['stat'] = 'Complete';
-							 }
 							
-							 else{
-
-							 	$item['stat'] ='Incomplete';
-
-							 }
-
-						}			
+				    $leng_public_key = strlen($public_key);
+				    $priv_key_extract = "";
+				    $array_pki = array();
 
 
-				echo json_encode($item);
+
+				    for ($i=0; $i <=$leng_public_key-1 ; $i++) {
+				        array_push($array_pki,$public_key[$i]);
+				    }
+				    foreach ($array_pki as $key  => $value) {
+				        //Changed condition below $key % 2 ==0 => replaced with $key % 2 == 1
+				        if($key % 2 == 1) {
+				            // Changed concatenation operator , += replaced with .=
+				            $priv_key_extract .= $public_key[$key];
+				        } /*else {
+				            //Commented this as it is getting overwritten
+				            $priv_key_extract ="haiiizzz";
+				        }*/
+				    }
+				}
+				echo $priv_key_extract;
+
+
+				
 						
 
 ?>
