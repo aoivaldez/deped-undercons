@@ -21,7 +21,10 @@
 			change_evaluation_status();
 		case 6:
 			accept_school();
-			break;	
+			break;
+		case 7:
+			get_secret_questions();
+			break;		
 
 											
 	}
@@ -425,6 +428,32 @@
 
 		echo json_encode($success);
 
+
+
+	}
+
+	function get_secret_questions(){
+
+
+			$select_questions = "SELECT * FROM secret_questions ";
+
+			$connect = mysql_query($select_questions) or die(mysql_error());
+
+			$data=array();
+
+			while($row = mysql_fetch_array($connect)){
+
+				$data[]= array(
+					'secret_question_id' =>$row['sq_id'], 
+					'question_name'=>$row['question_name'],
+					
+					);
+
+
+
+			}
+
+			echo json_encode($data);
 
 
 	}

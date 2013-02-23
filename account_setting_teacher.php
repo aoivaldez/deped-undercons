@@ -69,7 +69,7 @@
                 </div>
 
                 <div id="change-username-content">
-                  <form action="" method="post">
+                 
                     <div id="change-username-table-wrap">                     
                         <table>
                           <tr>
@@ -95,10 +95,10 @@
                             </td>
                           </tr>
                         </table>
-                    </form>
+                    
                     </div>
                       <div class="change-button-wrap">
-                        <input type="submit" name="change_usrname_button" id="change_usrname_button" value="Change" class="button"> 
+                        <input type="button" name="change_usrname_button" id="change_usrname_button" value="Change" class="button"> 
                       </div>  
                 
                </div> 
@@ -147,15 +147,15 @@
               </div>
             </li>
             <li>
-              <div class="edit-wrap-link"><a href="#password-edit-wrap">Password</a></div></li>
+              <div class="edit-wrap-link"><a href="#password-edit-wrap">Password</a></div>
               <div id="password-edit-wrap" class="change-wrap">
-                <div id="change-emailaddress-header" class="header-name-wrap">
+                <div id="change-pass-header" class="header-name-wrap">
                   <h3>Change Password</h3>
                 </div>
 
-                <div id="change-username-content">
+                <div id="change-pass-content">
                   
-                    <div id="change-username-table-wrap">
+                    <div id="change-pass-table-wrap">
                       <table>
                         <tr>
                           <td>
@@ -193,12 +193,65 @@
                       </table>
                     </div>
                       <div class="change-button-wrap">  
-                        <input type="submit" id="change_password_button" value="Change" class="button">
+                        <input type="button" id="change_password_button" value="Change" class="button">
                       </div> 
                 
                </div> 
-              </div
+              </div>
+            </li>
+             <li>
+              <div class="edit-wrap-link"><a href="#sq-edit-wrap">Security Question</a></div>
+              <div id="sq-edit-wrap" class="change-wrap">
+                <div id="change-sq-header" class="header-name-wrap">
+                  <h3>Security Question</h3>
+                </div>
 
+                <div id="change-sq-content">
+                  
+                    <div id="change-sq-table-wrap">
+                      <table>
+                        <tr>
+                          <td>
+                            <label>Current Secret Question:</label>
+                          </td>
+                          <td>
+                             <select id="secret-question-current"> </select>
+                          </td>
+                          <td>
+                            &nbsp;
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label>Secret Questions:</label>
+                          </td>
+                          <td>
+                            <select id="secret-question-list"> </select>
+                          </td>
+                          <td>
+                            &nbsp;
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label>Answer</label>
+                          </td>
+                          <td>
+                            <input type="text" id="sq_answer" class="input">
+                          </td>
+                          <td>
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                      <div class="change-button-wrap">  
+                        <input type="button" id="change_secret_question" value="Change" class="button">
+                      </div> 
+                
+               </div> 
+              </div>
+            </li>
           </ul>
         </div>  
 
@@ -222,7 +275,33 @@
           var accnt_set_tab = $(this).find("a").attr("href");
           $(accnt_set_tab).toggle();
         return false;  
-      });      
+      }); 
+
+
+      function get_questions()
+    {
+
+      var  html = "";
+
+      $.ajax({
+                        type:'POST',
+                        url:'deped_functions.php',
+                   dataType:'json',
+                       data:{'func_num':'7'},
+                    success:function (data){
+
+                       $.each(data, function(i, item) {       
+                            html += "<option value="+data[i].secret_question_id+">"+data[i].question_name+"</option>";
+
+                                   });
+                       $('#secret-question-list').append(html);
+                        
+                      }
+
+                    });
+    }
+
+    get_questions();     
 
 
     });
