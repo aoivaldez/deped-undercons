@@ -19,6 +19,9 @@
 			break;
 		case 5:
 			change_evaluation_status();
+		case 6:
+			accept_school();
+			break;	
 
 											
 	}
@@ -209,24 +212,48 @@
 
 		$section_id = $_POST['section_id'];
 
+		$year = date("Y");
+
 		 $today  = date("Y-m-d", strtotime(date("F j, Y")));;
-		
-
-		$reject_school =  "UPDATE deped_grade_archive SET status_acceptance = 'Rejected' , accepted_dates = '$today'
-						   WHERE school_id = '$school_id' AND section_id = '$section_id' ";
 
 
-		$query_reject = mysql_query($reject_school) OR die(mysql_error());				   
+		 $check_deped_depot = "SELECT * FROM deped_grade_archive_depot a
+							 
+							   LEFT JOIN section b ON(b.section_name = a.section_name)							
+						   	  WHERE a.school_id = '$school_id' AND b.section_id = '$section_id' AND school_year = '$year' ";
 
-		if($query_reject){
+		$check_deped_query = mysql_query($check_deped_depot) OR die(mysql_error());				   	
 
-			$success['success'] = '1';
-		}
-		else{
+		$exist_count = mysql_num_rows($check_deped_query);
+
+		if($exist_count > 0)
+
+		{
 
 			$success['success'] = '0';
-		}
 
+
+		}
+		else
+		{
+				
+					$reject_school =  "UPDATE deped_grade_archive SET status_acceptance = 'Rejected' , accepted_dates = '$today'
+								   WHERE school_id = '$school_id' AND section_id = '$section_id' ";
+
+
+				$query_reject = mysql_query($reject_school) OR die(mysql_error());				   
+
+				if($query_reject){
+
+					$success['success'] = '1';
+				}
+				else{
+
+					$success['success'] = '0';
+				}
+
+		}
+		
 
 		echo json_encode($success);
 	}
@@ -256,6 +283,150 @@
 
 		echo json_encode($return);
 			
+	}
+
+	function accept_school(){
+
+		$school_id = $_POST['school_id'];
+
+		$section_id = $_POST['section_id'];
+
+		$year = date("Y");
+		
+		$today  = date("Y-m-d", strtotime(date("F j, Y")));
+
+		$check_deped_depot = "SELECT * FROM deped_grade_archive_depot a
+							 
+							   LEFT JOIN section b ON(b.section_name = a.section_name)							
+						   	  WHERE a.school_id = '$school_id' AND b.section_id = '$section_id' AND school_year = '$year' ";
+
+		$check_deped_query = mysql_query($check_deped_depot) OR die(mysql_error());				   	
+
+		$exist_count = mysql_num_rows($check_deped_query);
+
+		if($exist_count > 0)
+
+		{
+
+			$success['success'] = '0';
+
+
+		}
+		else
+		{
+				$accept_school =  "SELECT * FROM deped_grade_archive a
+							LEFT JOIN section b ON (a.section_id=b.section_id)
+							LEFT JOIN school_faculty c ON (c.faculty_id = a.advisor_id)
+						   WHERE a.school_id = '$school_id' AND a.section_id = '$section_id' ";
+
+
+		$accept_query = mysql_query($accept_school) OR die(mysql_error());
+
+
+		
+
+
+								$insert_info = array();	
+
+							$insert_grade_deped_depot = "INSERT INTO deped_grade_archive_depot 
+																			(first_name,
+																			 middle_name,
+																			 last_name,
+																			 grade,
+																			 school_id,
+																			 subject_id,
+																			 section_name,
+																			 advisor_name,
+																			 year_in_school,
+																			 school_year,
+																			 age,
+																			 gender,
+																			 address,
+																			 attendance,
+																			 accepted_dates) VALUES ";
+
+
+							$count = 0;
+
+	  							while ($row = mysql_fetch_array($accept_query))
+									{
+		
+										   $sec_name=$row['section_name'];
+										    $advisor_firstname=$row['f_firstname'];
+										    $advisor_lastname=$row['f_lastname'];
+										    $advisor_middlename=$row['f_middlename'];
+										   $subject_id=$row['subject_id'];
+										   $firstname=$row['first_name'];
+										   $middlename=$row['middle_name'];
+										  $lastname=$row['last_name'];
+										  $age=$row['age'];
+										  $gender=$row['gender'];
+										   $address=$row['address'];
+										  $years_in_school=$row['year_in_school'];
+										  $grade=$row['grade'];
+										  $attendance=$row['attendance'];
+
+										  $advisor_full_name = $advisor_lastname.", ".$advisor_firstname." ".$advisor_middlename;
+
+
+										$insert_info[$count]="	('".$row['first_name']."', 
+																'".$row['middle_name']."',
+																'".$row['last_name']."',
+																'".$row['grade']."',
+																'".$school_id."',
+																'".$row['subject_id']."',
+																'".$row['section_name']."',
+																'".$advisor_full_name."',
+																'".$row['year_in_school']."',
+																'".$year."',
+																'".$row['age']."',
+																'".$row['gender']."',
+																'".$row['address']."',
+																'".$row['attendance']."',
+																'".$today."') ";
+
+
+											$count++;
+										  
+									}
+
+										$insert_info = implode(', ', $insert_info);
+
+								$ready_insert_grades = $insert_grade_deped_depot . $insert_info;	
+									
+									$query_accept_deped_grades = mysql_query($ready_insert_grades) or die(mysql_error());
+
+
+
+
+
+
+						if($query_accept_deped_grades){
+
+							$success['success'] = '1';
+
+							$accept_status =  "UPDATE deped_grade_archive SET status_acceptance = 'Accepted' , accepted_dates = '$today'
+						   WHERE school_id = '$school_id' AND section_id = '$section_id' ";
+							$query_accept_status = mysql_query($accept_status) OR die(mysql_error());
+
+						}
+						else{
+
+							$success['success'] = '0';
+						}
+
+
+		}
+
+
+
+		
+
+
+		echo json_encode($success);
+
+
+
 	}
 
 	

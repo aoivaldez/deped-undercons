@@ -242,7 +242,7 @@
                        data:{'func_num':'4','school_id':school_id,'section_id':section_id},
                     success:function (data){
                       
-                      if(data.success){
+                      if(data.success== "1"){
 
                         alert("Rejection Is Successful");
                         get_schools_sections();
@@ -250,6 +250,7 @@
                       else{
 
                         alert("Error In Rejection");
+                        get_schools_sections();
                       }
 
                    }   
@@ -261,6 +262,56 @@
               { 
 
                 alert("Please Select A School To Reject")
+              }
+
+
+            });
+
+
+          $('#accept-school-button').click(function(){
+
+              if($('input[name=advisory_section]').is(':checked')){
+
+                var school_id = $('#school-id').val();
+
+                var section_id = $('input[name=advisory_section]:checked').attr("rel");
+
+
+                $('#table-school-sections-content').html("");
+
+                if(ajax_request){
+
+                  ajax_request.abort();
+                }
+                  
+                ajax_request = $.ajax({
+
+                       type:'POST',
+                        url:'deped_functions.php',
+                   dataType:'json',
+                       data:{'func_num':'6','school_id':school_id,'section_id':section_id},
+                    success:function (data){
+                      
+                      if(data.success == "1"){
+
+                        alert("Acceptance Is Successful");
+                        get_schools_sections();
+                      }
+                      else{
+
+                        alert("Error In Acceptance");
+                        get_schools_sections();
+                      }
+
+                   }   
+
+                });
+
+              }
+              else
+              { 
+
+                alert("Please Select A School To Accept")
               }
 
 
