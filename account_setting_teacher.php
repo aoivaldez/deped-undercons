@@ -1,12 +1,30 @@
 <!doctype html>
 
 <?php
-  session_start();
-  include_once('account_settings_teacher_get.php');
- 
 
-  $log_session = $_SESSION['accnt_typ_fac'];
-  $user_fac =  $_SESSION['user_id_fac'];
+   
+    include_once('DBconnect.php');
+ 
+    session_start(); 
+
+
+
+    $user_fac =  $_SESSION['user_id_fac'];
+    $log_session = $_SESSION['accnt_typ_fac'];
+
+
+    $get = "SELECT * FROM school_faculty WHERE faculty_id = '".$user_fac."' ";
+
+    $result=mysql_query($get)or die(mysql_error());
+
+    while ($row = mysql_fetch_array($result))
+    {
+      $user_name = $row['username'];
+        $email = $row['email'];
+       $password = $row['password'];
+    }
+  
+  
 
   if(!isset($log_session) || empty($log_session)){
 
@@ -272,7 +290,11 @@
   <script>
     $(document).ready(function(){
        var user_name;
+       var current_password ;
+       var typingTimer;               
+      var doneTypingInterval = 3000;
     
+      
 
         $(".edit-wrap-link").click(function() {
           var accnt_set_tab = $(this).find("a").attr("href");
@@ -307,41 +329,207 @@
     get_questions();
 
 
-      $('#new-chnge-username').on('blur', function (){
+
+
+     $('#new-chnge-username').on('keyup', function (){
 
           user_name =  $('#new-chnge-username').val();
 
+           clearTimeout(typingTimer);
 
-           $.ajax({
-                        type:'POST',
-                        url:'teacher_functions.php',
-                   dataType:'json',
-                       data:{'func_num':'1','username':user_name},
-                    success:function (data){
+           $('#change-usrname-button').unbind('click');              
+              $('#change-usrname-button').addClass("inactiveButton");
 
-                          if(data.error == "1"){
 
-                              alert("The Username is Already in use");
-                              $('#new-chnge-username').val("");
-                               $('#change-usrname-button').unbind('click');
+          if(user_name)
+          {
+               typingTimer = setTimeout(check_validity_username, doneTypingInterval);
+         }
+         else{
+
+               $('#change-usrname-button').unbind('click');              
+              $('#change-usrname-button').addClass("inactiveButton");
+
+         }
+
+
+
+      });
+
+    function check_validity_username(){
+
+       user_name =  $('#new-chnge-username').val();
+
+            $.ajax({
+                            type:'POST',
+                            url:'teacher_functions.php',
+                       dataType:'json',
+                           data:{'func_num':'1','username':user_name},
+                        success:function (data){
+
+                              if(data.error == "1"){
+
+                                  alert("The Username is Already in use");
+                                  $('#new-chnge-username').val("");
+                                   $('#change-usrname-button').unbind('click');
+                                  
                                   $('#change-usrname-button').addClass("inactiveButton");
 
 
+                              }
+                              else{
+
+                                $('#change-usrname-button').bind('click');
+                                $('#change-usrname-button').removeClass("inactiveButton");
+
+
+                                 $('#change-usrname-button').click(function (){
+
+                                  
+
+                                        user_name =  $('#new-chnge-username').val();
+
+                                        $.ajax({
+                                                        type:'POST',
+                                                         url:'teacher_functions.php',
+                                                    dataType:'json',
+                                                        data:{'func_num':'2','username':user_name},
+                                                     success:function (data){
+
+                                                           if(data.error == "0"){
+                                                             
+                                                               
+                                                               alert("The Username is Already Changed");
+                                                              $(location).attr("href","account_setting_teacher.php");
+
+                                                           }
+                                                           else{
+
+                                                               
+
+                                                               alert("Error in changing username");
+                                                           }
+                                                        
+                                                       }
+
+                                                     });
+                                  });     
+
+
+                              }
+                            
                           }
-                          else{
 
-                            $('#change-usrname-button').bind('click');
-                                  $('#change-usrname-button').removeClass("inactiveButton");
-                          }
-                        
-                      }
+                        });
+    }
 
-                    });
+    function check_match_current_password()
+    {
+
+      current_password =  $('#current-pass').val();
+        $.ajax({
+                            type:'POST',
+                            url:'teacher_functions.php',
+                       dataType:'json',
+                           data:{'func_num':'3','password':current_password},
+                        success:function (data){
+
+                           if(data.error == "1"){
+
+                                
+
+                               $('#change-password-btn').bind('click');
+                               $('#change-password-btn').removeClass("inactiveButton");
+
+                               $('#change-password-btn').click(function (){
+
+                                  if($('#new-password').val() == $('#new-password-confirm').val() && $('#new-password-confirm').val() != "")
+
+                                  {
+
+                                   var new_password = $('#new-password-confirm').val();
+
+                                     $.ajax({
+                                                        type:'POST',
+                                                         url:'teacher_functions.php',
+                                                    dataType:'json',
+                                                        data:{'func_num':'4','password':new_password},
+                                                     success:function (data){
+
+                                                           if(data.error == "1"){
+                                                            alert("Error in Changing Password");
+                                                              
+                                                           }
+                                                           else{
+
+                                                               
+                                                                alert("The Password is Already Changed");
+                                                              $(location).attr("href","account_setting_teacher.php");
+                                                           }
+                                                        
+                                                       }
+
+                                                     });
+
+                                  }
+                                  else
+                                  {
+                                    alert("password did not match");
+
+                                  }
+
+
+                               });
 
 
 
+                               
 
-      });     
+
+                              }
+                              else{
+                                
+
+                                 alert("Current password is wrong");
+
+                                  $('#current-pass').val("");
+
+                                   $('#change-password-btn').unbind('click');              
+                                   $('#change-password-btn').addClass("inactiveButton");
+
+                              }
+                        }
+
+              });          
+    }
+
+
+      $('#current-pass').on('keyup', function (){
+
+           current_password =  $('#current-pass').val();
+
+           clearTimeout(typingTimer);
+
+           $('#change-password-btn').unbind('click');              
+              $('#change-password-btn').addClass("inactiveButton");
+
+
+          if(current_password)
+          {
+               typingTimer = setTimeout(check_match_current_password, doneTypingInterval);
+         }
+         else{
+
+               $('#change-password-btn').unbind('click');              
+              $('#change-password-btn').addClass("inactiveButton");
+
+         }
+
+
+
+      });
+
+     
 
 
     });

@@ -71,6 +71,7 @@ if(isset($_POST['add_faculty'])){
 		$username = strtolower(getInitials($ffirstname).getInitials($fmiddlename).$flastname);
 		$defpass = 12345;
 		
+		$defpassfinal1 = sha1($defpass);
 
 		/*end fac reg*/
 			$check = "SELECT * FROM school_faculty WHERE username = '$username'";
@@ -106,7 +107,7 @@ if(isset($_POST['add_faculty'])){
 						$_SESSION['fa_firstname'] = $ffirstname;
 
 						$insert = "INSERT INTO school_faculty(account_type_id,school_id,f_lastname,f_firstname,f_middlename,gender,username,password,email) 
-			  					   VALUES('3','$sch_id_reg','$flastname','$ffirstname','$fmiddlename','$fgender','$username','$defpass','$feadd')";
+			  					   VALUES('3','$sch_id_reg','$flastname','$ffirstname','$fmiddlename','$fgender','$username','$defpassfinal1','$feadd')";
 
 						if(@!mysql_query($insert)){
 							die('error insert'.mysql_error());
@@ -186,6 +187,8 @@ if(isset($_POST['add_admin'])){
 
 		$username = strtolower(getInitials($adminfirstname).getInitials($adminmiddlename).$adminlastname);
 		$defpass = 12345;
+
+		$defpassfinal = sha1($defpass);
 	
 		$check = "SELECT * FROM deped_accounts WHERE deped_username = '$username'";
 		$checkquery = mysql_query($check);
@@ -218,7 +221,7 @@ if(isset($_POST['add_admin'])){
 						$_SESSION['ad_firstname'] = $adminfirstname;
 
 						$insert = "INSERT INTO deped_accounts(account_type_id,lastname,firstname,middlename,gender,email,deped_username,deped_password,level,position) 
-								  VALUES('1','$adminlastname','$adminfirstname','$adminmiddlename','$admingender','$admineadd','$username','$defpass','$adminlevel','$adminposition')";
+								  VALUES('1','$adminlastname','$adminfirstname','$adminmiddlename','$admingender','$admineadd','$username','$defpassfinal','$adminlevel','$adminposition')";
 
 
 								if(@!mysql_query($insert)){

@@ -1,10 +1,9 @@
 <?php 
 
 include_once('DBconnect.php');
-if(!isset($_SESSION)) 
-{ 
+ 
 session_start(); 
-}  
+
 
 
 $user_fac =  $_SESSION['user_id_fac'];

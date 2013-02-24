@@ -6,7 +6,7 @@ include_once('DBconnect.php');
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-
+$hash_password = sha1($password);
   $query= "SELECT b.account_type_id,
                   a.school_password,
                    a.school_username,
@@ -16,7 +16,7 @@ $password = $_POST['password'];
 
            LEFT JOIN account_classification b ON (a.account_type_id = b.account_type_id)
 
-           WHERE a.school_username='$username' AND a.school_password ='$password' ";
+           WHERE a.school_username='$username' AND a.school_password ='$hash_password' ";
 
           $result = mysql_query($query);
                if(@!$result){
@@ -51,7 +51,7 @@ $password = $_POST['password'];
                          LEFT JOIN account_classification b ON (a.account_type_id = b.account_type_id)
                          LEFT JOIN status_availability c ON (a.status_id = c.status_id)
 
-                         WHERE a.username='$username'  AND a.password ='$password' AND c.status = 'Active' ";
+                         WHERE a.username='$username'  AND a.password ='$hash_password' AND c.status = 'Active' ";
 
                           $result2 = mysql_query($query2);
                                if(@!$result2){
@@ -84,7 +84,7 @@ $password = $_POST['password'];
                                      FROM deped_accounts a
                                      LEFT JOIN account_classification b ON (a.account_type_id = b.account_type_id)
 
-                                     WHERE a.deped_username='$username' AND a.deped_password ='$password' ";
+                                     WHERE a.deped_username='$username' AND a.deped_password ='$hash_password' ";
 
                                       $result3 = mysql_query($query3);
                                            if(@!$result3){
