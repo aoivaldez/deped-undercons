@@ -77,7 +77,7 @@
                               <label>Username:</label>
                             </td>
                             <td>
-                              <input type="text" name="chnge_username" id="chnge_username" class="input" value=<?php echo $user_name;?> readonly="readonly">
+                              <input type="text" name="chnge_username" id="chnge-username" class="input" value=<?php echo $user_name;?> readonly="readonly">
                             </td>
                             <td>
                               &nbsp;
@@ -88,7 +88,7 @@
                               <label>New Username:</label>
                             </td>
                             <td>
-                              <input type="text" id="new_chnge_username" class="input">
+                              <input type="text" id="new-chnge-username" class="input">
                             </td>
                             <td>
                               &nbsp;
@@ -98,7 +98,7 @@
                     
                     </div>
                       <div class="change-button-wrap">
-                        <input type="button" name="change_usrname_button" id="change_usrname_button" value="Change" class="button"> 
+                        <input type="button" name="change_usrname_button" id="change-usrname-button" value="Change" class="button"> 
                       </div>  
                 
                </div> 
@@ -120,7 +120,7 @@
                             <label>User Emaill Address:</label>
                           </td>
                           <td>
-                            <input type="text" name="chnge_eadd" id="chnge_eadd" class="input" value=<?php echo $email;?> readonly="readonly">
+                            <input type="text" name="chnge_eadd" id="chnge-eadd" class="input" value=<?php echo $email;?> readonly="readonly">
                           </td>
                           <td>
                             &nbsp;
@@ -131,7 +131,7 @@
                             <label>New Email Address:</label>
                           </td>
                           <td>
-                            <input type="text" name="new_chnge_eadd" id="new_chnge_eadd" class="input">
+                            <input type="text" name="new_chnge_eadd" id="new-chnge-eadd" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -140,7 +140,7 @@
                       </table>
                     </div>
                       <div class="change-button-wrap">  
-                        <input type="button" name="change_eadd_button" id="change_eadd_button" value="Change" class="button">
+                        <input type="button" name="change_eadd_button" id="change-eadd-btn" value="Change" class="button">
                       </div> 
                 
                </div> 
@@ -162,7 +162,7 @@
                             <label>Current Password:</label>
                           </td>
                           <td>
-                            <input type="password" id="current_pass" class="input">
+                            <input type="password" id="current-pass" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -173,7 +173,7 @@
                             <label>New Password</label>
                           </td>
                           <td>
-                            <input type="password" id="new_password" class="input">
+                            <input type="password" id="new-password" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -184,7 +184,7 @@
                             <label>Confirm Password</label>
                           </td>
                           <td>
-                            <input type="password" id="new_password_confirm" class="input">
+                            <input type="password" id="new-password-confirm" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -193,7 +193,7 @@
                       </table>
                     </div>
                       <div class="change-button-wrap">  
-                        <input type="button" id="change_password_button" value="Change" class="button">
+                        <input type="button" id="change-password-btn" value="Change" class="button">
                       </div> 
                 
                </div> 
@@ -246,7 +246,7 @@
                       </table>
                     </div>
                       <div class="change-button-wrap">  
-                        <input type="button" id="change_secret_question" value="Change" class="button">
+                        <input type="button" id="change-secret-question" value="Change" class="button">
                       </div> 
                 
                </div> 
@@ -271,6 +271,9 @@
 
   <script>
     $(document).ready(function(){
+       var user_name;
+    
+
         $(".edit-wrap-link").click(function() {
           var accnt_set_tab = $(this).find("a").attr("href");
           $(accnt_set_tab).toggle();
@@ -301,7 +304,44 @@
                     });
     }
 
-    get_questions();     
+    get_questions();
+
+
+      $('#new-chnge-username').on('blur', function (){
+
+          user_name =  $('#new-chnge-username').val();
+
+
+           $.ajax({
+                        type:'POST',
+                        url:'teacher_functions.php',
+                   dataType:'json',
+                       data:{'func_num':'1','username':user_name},
+                    success:function (data){
+
+                          if(data.error == "1"){
+
+                              alert("The Username is Already in use");
+                              $('#new-chnge-username').val("");
+                               $('#change-usrname-button').unbind('click');
+                                  $('#change-usrname-button').addClass("inactiveButton");
+
+
+                          }
+                          else{
+
+                            $('#change-usrname-button').bind('click');
+                                  $('#change-usrname-button').removeClass("inactiveButton");
+                          }
+                        
+                      }
+
+                    });
+
+
+
+
+      });     
 
 
     });
