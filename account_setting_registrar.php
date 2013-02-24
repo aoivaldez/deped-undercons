@@ -1,14 +1,27 @@
 <!doctype html>
 
 <?php
-  session_start();
 
-   include_once('account_setting_registrar_get.php');
+  include_once('DBconnect.php');
+  session_start();
 
   $user_id_admin =   $_SESSION['user_id_regis'];
  
 
   $log_session = $_SESSION['accnt_typ'];
+
+
+  $get = "SELECT * FROM school_admin WHERE school_admin_id = '".$user_id_admin."' ";
+
+    $result=mysql_query($get)or die(mysql_error());
+
+    while ($row = mysql_fetch_array($result))
+    {
+      $user_name = $row['school_username'];
+        $email = $row['email'];
+       $password = $row['school_password'];
+    }
+
 
   if(!isset($log_session) || empty($log_session)){
 
@@ -80,7 +93,7 @@
                             <label>Username:</label>
                           </td>
                           <td>
-                            <input type="text" name="chnge_username" id="chnge_username" class="input" value=<?php echo $user_name?> readonly="readonly" >
+                            <input type="text" name="chnge_username" id="chnge-username" class="input" value=<?php echo $user_name?> readonly="readonly" >
                           </td>
                           <td>
                             &nbsp;
@@ -91,7 +104,7 @@
                             <label>New Username:</label>
                           </td>
                           <td>
-                            <input type="text" name="new_chnge_username" id="new_chnge_username" class="input">
+                            <input type="text" name="new_chnge_username" id="new-chnge-username" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -100,7 +113,7 @@
                       </table>
                     </div>
                       <div class="change-button-wrap">
-                        <input type="submit" name="change_usrname_button" id="change_usrname_button" value="Change" class="button"> 
+                        <input type="button" name="change_usrname_button" id="change-usrname-button" value="Change" class="button"> 
                       </div>  
                
                </div> 
@@ -163,7 +176,7 @@
                             <label>Current Password:</label>
                           </td>
                           <td>
-                            <input type="password" id="current_pass" class="input">
+                            <input type="password" id="current-pass" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -174,7 +187,7 @@
                             <label>New Password</label>
                           </td>
                           <td>
-                            <input type="password" id="new_password" class="input">
+                            <input type="password" id="new-password" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -185,7 +198,7 @@
                             <label>Confirm Password</label>
                           </td>
                           <td>
-                            <input type="password" id="new_password_confirm" class="input">
+                            <input type="password" id="new-password-confirm" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -194,7 +207,7 @@
                       </table>
                     </div>
                       <div class="change-button-wrap">  
-                        <input type="submit" id="change_password_button" value="Change" class="button">
+                        <input type="button" id="change-password-btn" value="Change" class="button">
                       </div>         
                </div> 
               </div>
@@ -216,12 +229,248 @@
   <script type="text/javascript" src="js/slimScroll.min.js"></script>
 
   <script>
-    $(document).ready(function(){
+   $(document).ready(function(){
+       var user_name;
+       var current_password ;
+       var typingTimer;               
+      var doneTypingInterval = 3000;
+    
+      
+
         $(".edit-wrap-link").click(function() {
           var accnt_set_tab = $(this).find("a").attr("href");
           $(accnt_set_tab).toggle();
         return false;  
-      });      
+      }); 
+
+
+      function get_questions()
+    {
+
+      var  html = "";
+
+      $.ajax({
+                        type:'POST',
+                        url:'deped_functions.php',
+                   dataType:'json',
+                       data:{'func_num':'7'},
+                    success:function (data){
+
+                       $.each(data, function(i, item) {       
+                            html += "<option value="+data[i].secret_question_id+">"+data[i].question_name+"</option>";
+
+                                   });
+                       $('#secret-question-list').append(html);
+                        
+                      }
+
+                    });
+    }
+
+    get_questions();
+
+
+
+
+     $('#new-chnge-username').on('keyup', function (){
+
+          user_name =  $('#new-chnge-username').val();
+
+           clearTimeout(typingTimer);
+
+           $('#change-usrname-button').unbind('click');              
+              $('#change-usrname-button').addClass("inactiveButton");
+
+
+          if(user_name)
+          {
+               typingTimer = setTimeout(check_validity_username, doneTypingInterval);
+         }
+         else{
+
+               $('#change-usrname-button').unbind('click');              
+              $('#change-usrname-button').addClass("inactiveButton");
+
+         }
+
+
+
+      });
+
+    function check_validity_username(){
+
+       user_name =  $('#new-chnge-username').val();
+
+            $.ajax({
+                            type:'POST',
+                            url:'registrar_functions.php',
+                       dataType:'json',
+                           data:{'func_num':'1','username':user_name},
+                        success:function (data){
+
+                              if(data.error == "1"){
+
+                                  alert("The Username is Already in use");
+                                  $('#new-chnge-username').val("");
+                                   $('#change-usrname-button').unbind('click');
+                                  
+                                  $('#change-usrname-button').addClass("inactiveButton");
+
+
+                              }
+                              else{
+
+                                $('#change-usrname-button').bind('click');
+                                $('#change-usrname-button').removeClass("inactiveButton");
+
+
+                                 $('#change-usrname-button').click(function (){
+
+                                  
+
+                                        user_name =  $('#new-chnge-username').val();
+
+                                        $.ajax({
+                                                        type:'POST',
+                                                         url:'registrar_functions.php',
+                                                    dataType:'json',
+                                                        data:{'func_num':'2','username':user_name},
+                                                     success:function (data){
+
+                                                           if(data.error == "0"){
+                                                             
+                                                               
+                                                               alert("The Username is Already Changed");
+                                                              $(location).attr("href","account_setting_registrar.php");
+
+                                                           }
+                                                           else{
+
+                                                               
+
+                                                               alert("Error in changing username");
+                                                           }
+                                                        
+                                                       }
+
+                                                     });
+                                  });     
+
+
+                              }
+                            
+                          }
+
+                        });
+    }
+
+    function check_match_current_password()
+    {
+
+      current_password =  $('#current-pass').val();
+        $.ajax({
+                            type:'POST',
+                            url:'registrar_functions.php',
+                       dataType:'json',
+                           data:{'func_num':'3','password':current_password},
+                        success:function (data){
+
+                           if(data.error == "1"){
+
+                                
+
+                               $('#change-password-btn').bind('click');
+                               $('#change-password-btn').removeClass("inactiveButton");
+
+                               $('#change-password-btn').click(function (){
+
+                                  if($('#new-password').val() == $('#new-password-confirm').val() && $('#new-password-confirm').val() != "")
+
+                                  {
+
+                                   var new_password = $('#new-password-confirm').val();
+
+                                     $.ajax({
+                                                        type:'POST',
+                                                         url:'registrar_functions.php',
+                                                    dataType:'json',
+                                                        data:{'func_num':'4','password':new_password},
+                                                     success:function (data){
+
+                                                           if(data.error == "1"){
+                                                            alert("Error in Changing Password");
+                                                              
+                                                           }
+                                                           else{
+
+                                                               
+                                                                alert("The Password is Already Changed");
+                                                              $(location).attr("href","account_setting_registrar.php");
+                                                           }
+                                                        
+                                                       }
+
+                                                     });
+
+                                  }
+                                  else
+                                  {
+                                    alert("password did not match");
+
+                                  }
+
+
+                               });
+
+
+
+                               
+
+
+                              }
+                              else{
+                                
+
+                                 alert("Current password is wrong");
+
+                                  $('#current-pass').val("");
+
+                                   $('#change-password-btn').unbind('click');              
+                                   $('#change-password-btn').addClass("inactiveButton");
+
+                              }
+                        }
+
+              });          
+    }
+
+
+      $('#current-pass').on('keyup', function (){
+
+           current_password =  $('#current-pass').val();
+
+           clearTimeout(typingTimer);
+
+           $('#change-password-btn').unbind('click');              
+              $('#change-password-btn').addClass("inactiveButton");
+
+
+          if(current_password)
+          {
+               typingTimer = setTimeout(check_match_current_password, doneTypingInterval);
+         }
+         else{
+
+               $('#change-password-btn').unbind('click');              
+              $('#change-password-btn').addClass("inactiveButton");
+
+         }
+
+
+
+      });
+
+     
 
 
     });
