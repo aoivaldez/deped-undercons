@@ -28,23 +28,27 @@
 
     <div role="main" id="main">
       <div id="wrap">
-          <div id="first-content">
+          
            
             <div id="wrap-form">
               
-            
+            <div id="notice-wrap" style="display:none;">
+                  <span id="notice">Error Verifying Secret Question</span>
+            </div>
+
+
               <fieldset id="login-wrap" >
-                <form action="" id="log-form" method="post">
+                <form action="forgot_pass_get.php" id="log-form" method="post">
 
                   <div id="user-login-wrap">  
                     <label class="label-log">Username:</label>
-                     <input type="text" id="usr_name" class="input log-input" name="username"/>
+                     <input type="text" id="usr_name" class="input log-input" name="user_name"/>
                   </div>
 
 
                   <div id="question-wrap">  
                     <label class="label-log">Secret Question:</label>
-                    <select id="secret-question-list"> </select>
+                    <select id="secret-question-list" name="secret_question"> </select>
                     
                   </div>
 
@@ -57,7 +61,7 @@
 
                   <div id="button-login-wrap">
                     <div id="left-log-wrap">
-                      <input type="submit" value="Verify" class="button" id="login_but" name="login_button">
+                      <input type="submit" value="Verify" class="button" id="verify-btn" name="verify_button">
                     </div>
 
                     
@@ -68,7 +72,12 @@
           </div>
 
           </div>
+          <?php
+              $error = $_GET['error_verify'];
+
+            ?>
           
+          <input type="hidden" id="notice_url" value=<?php echo $error; ?> >
 
       </div>
 
@@ -92,6 +101,8 @@
   <script>
   $(document).ready(function () {
   
+    
+
   /*****************letters only regex*********************/
     function get_questions()
     {
@@ -127,6 +138,23 @@
 
     get_questions();
 
+    
+
+    function show_notice(){
+
+          alert($('#notice_url').val());
+
+
+         if($('#notice_url').val() == "1" ){
+
+          $('#notice-wrap').show();
+
+        }
+
+      }
+
+
+      show_notice();
 /**********************end letters only*****************/
   
   });

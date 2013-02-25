@@ -12,9 +12,9 @@
 
 
 #wrap-form{
-	margin:50px auto 0 auto;
-	height:170px;
-	width:510px;
+	margin:50px auto 100px auto;
+	height:270px;
+	width:600px;
 	
 
 }
@@ -104,9 +104,3 @@
 
 }
 
-#first-content{
-
-	position:relative;
-	width:800px;
-	height:300px; 
-}
