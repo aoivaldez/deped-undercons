@@ -255,7 +255,7 @@
                             <label>Answer</label>
                           </td>
                           <td>
-                            <input type="text" id="sq_answer" class="input">
+                            <input type="text" id="sq-answer" class="input">
                           </td>
                           <td>
                             &nbsp;
@@ -341,11 +341,15 @@
               $('#change-usrname-button').addClass("inactiveButton");
 
 
-          if(user_name)
+               var RegExpression = /^[a-zA-Z0-9_]*$/; 
+
+          if(user_name && RegExpression.test($(this).val()))
           {
                typingTimer = setTimeout(check_validity_username, doneTypingInterval);
          }
          else{
+
+              alert("numbers,letters and underscores are only allowed ");
 
                $('#change-usrname-button').unbind('click');              
               $('#change-usrname-button').addClass("inactiveButton");
@@ -359,6 +363,14 @@
     function check_validity_username(){
 
        user_name =  $('#new-chnge-username').val();
+
+      
+
+        var RegExpression = /^[a-zA-Z0-9]*$/; 
+
+
+
+        if(RegExpression.test($(user_name).val()) && user_name.length > 6 ){
 
             $.ajax({
                             type:'POST',
@@ -421,6 +433,12 @@
                           }
 
                         });
+
+                }else{
+
+
+               alert("numbers and letters are only allowed. The Username Must Be more than 6 characters ");
+            }
     }
 
     function check_match_current_password()
@@ -529,7 +547,67 @@
 
       });
 
+       function get_current_questions()
+          {
+
+                        $.ajax({
+                              type:'POST',
+                              url:'teacher_functions.php',
+                         dataType:'json',
+                             data:{'func_num':'6'},
+                          success:function (data){
+
+                                   
+                                var  sq_html = "<option >"+data.secret_question+"</option>";
+
+                                        
+                             $('#secret-question-current').append(sq_html);
+                              
+                            }
+
+                          });
+          }
+
+    get_current_questions();
+
      
+       $('#change-secret-question').click(function (){
+
+          var sq_type =  $('#secret-question-list').val();
+          var sq_answer = $('#sq-answer').val();
+
+          alert(sq_answer);
+
+          if(sq_answer != ""){
+
+                 $.ajax({
+                                type:'POST',
+                                url:'teacher_functions.php',
+                           dataType:'json',
+                               data:{'func_num':'5','secretquestion':sq_type,'secretanswer':sq_answer},
+                            success:function (data){
+
+                                  if(data.error == "0"){
+
+                                      alert("Secret Question Changed");
+                                      $(location).attr("href","account_setting_teacher.php");
+                                  }
+                                  else{
+                                     alert("error in changing secret question");
+
+                                  }
+
+                            }      
+
+             });
+           }
+           
+           else{
+
+
+             alert("Please put your answer");
+           }      
+        });
 
 
     });

@@ -7,6 +7,7 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
 $hash_password = sha1($password);
+
   $query= "SELECT b.account_type_id,
                   a.school_password,
                    a.school_username,
@@ -149,8 +150,7 @@ $hash_password = sha1($password);
                     }
 
            
-              
-
+            
 echo json_encode($return);
   
 ?>

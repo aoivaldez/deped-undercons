@@ -17,7 +17,13 @@
 			break;
 		case 4:
 			change_password();
-			break;						
+			break;
+		case 5:	
+			change_secret_question();
+			break;
+		case 6:	
+			get_secret_question();
+			break;								
 											
 	}
 
@@ -128,6 +134,73 @@
         }
 
        echo json_encode($return);
+	}
+	function change_secret_question(){
+
+		session_start(); 
+
+			$user_id_admin =  $_SESSION['user_id_regis'];
+			$secretquestion = $_POST['secretquestion'];
+			$secretanswer = $_POST['secretanswer'];	
+
+			$hash_secretanswer = sha1($secretanswer);
+
+			
+
+
+         $update_secret_question = "UPDATE school_admin 
+         					 SET sq_id = '$secretquestion',sq_answer ='$hash_secretanswer' 
+         					 WHERE school_admin_id = '$user_id_admin' "; 
+
+        $query_update_secret_question =  mysql_query($update_secret_question) or die(mysql_error());
+
+        if($query_update_secret_question){
+
+        	$return['error'] = "0";
+        }
+
+        else{
+
+        	$return['error'] = "1";
+        }
+
+       echo json_encode($return);
+
+
+	}
+
+	function get_secret_question()
+	{
+		session_start(); 
+
+			$user_id_admin =  $_SESSION['user_id_regis'];
+
+		$get_secret_question = "SELECT * FROM school_admin a 
+								LEFT JOIN secret_questions b ON(a.sq_id = b.sq_id)	
+								WHERE school_admin_id = $user_id_admin";	
+
+		$query_get_sq = mysql_query($get_secret_question) or die(mysql_error());
+
+		while ($row = mysql_fetch_array($query_get_sq))
+		    {
+		      $secretquestion= $row['question_name'];
+		       
+		    }
+
+
+		    if($query_get_sq)
+		    {
+		    	$data['secret_question'] = $secretquestion;
+
+		    }
+
+		    else{
+
+		    	$data['secret_question'] = "0";
+
+		    }
+
+		    echo json_encode($data);
 	}
 
 ?>

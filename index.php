@@ -69,6 +69,8 @@
                   </div>
                  </form>         
               </fieldset>
+
+              <a href="forgot_pass.php?error_verify=0">Forgot password?</a>
           </div>
 
           </div>
