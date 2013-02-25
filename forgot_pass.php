@@ -142,9 +142,6 @@
 
     function show_notice(){
 
-          alert($('#notice_url').val());
-
-
          if($('#notice_url').val() == "1" ){
 
           $('#notice-wrap').show();

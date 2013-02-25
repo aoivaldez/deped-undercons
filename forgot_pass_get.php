@@ -19,7 +19,13 @@
 
 					$count_affected_teacher = mysql_num_rows($query_teacher);
 
-					if($count_affected < 1)
+					while($row = mysql_fetch_array($query_teacher)){
+
+
+							$id_teacher = $row['faculty_id'];
+						}
+
+					if($count_affected_teacher < 1)
 
 					{
 
@@ -27,19 +33,33 @@
 									   WHERE school_username = '$username '
 									   AND sq_id = '$secret_question'
 									   AND sq_answer = '$hash_secret_answer' ";
-						$query_teacher = mysql_query($select_teacher)	or die(mysql_error());
+						$query_admin = mysql_query($select_admin)	or die(mysql_error());
 
-						$count_affected_admin = mysql_num_rows($query_teacher);
+						$count_affected_admin = mysql_num_rows($query_admin);
 
-						$count_affected_admin = mysql_num_rows($query_teacher);
+						while($row1 = mysql_fetch_array($query_admin)){
 
-						if()
+
+							$id_admin = $row1['school_admin_id'];
+						}
+
+						
+
+						if($count_affected_admin < 1){
+
+							header("location:forgot_pass.php?error_verify=1");
+
+						}
+						else{
+
+							header("location:change_password.php?account_type=registrar&id=".$id_admin."");
+						}
 
 
 					}else{
 
 
-
+						header("location:change_password.php?account_type=teacher&id=".$id_teacher."");
 
 
 					}			   
